@@ -1,0 +1,44 @@
+﻿# Credentials and local configuration
+secrets/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+.kube/
+pull-secret*
+*.token
+
+# Virtual machines and installation media
+vms/
+*.vhd
+*.vhdx
+*.avhd
+*.avhdx
+*.iso
+
+# Generated data and local artifacts
+data/
+backups/
+logs/
+*.log
+*.bak
+models/
+
+# Python environments and cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Local editor and Windows files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
