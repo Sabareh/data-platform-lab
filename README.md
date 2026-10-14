@@ -83,17 +83,22 @@ The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
 Windows restart was recommended but not explicitly confirmed in the evidence.
 
-## Step-by-step guides
+## Documentation
 
-- [Windows Git and GitHub foundation](docs/01-repository-foundation.md)
-- [Hyper-V network, concepts and troubleshooting](docs/02-hyperv-network.md)
-- [RHEL ISO verification and first VM preparation](docs/03-rhel-control-plane-vm.md)
-- [First boot, SSH and repository access, with screenshots](docs/04-rhel-first-boot.md)
-- [Kubernetes node preparation and troubleshooting](docs/05-kubernetes-node-preparation.md)
-- [GitHub Actions and local registry plan](docs/06-ci-and-registry-plan.md)
-- [Control-plane bootstrap and Calico](docs/07-control-plane-and-calico.md)
-- [Screenshot evidence index: 28 images](docs/screenshots.md)
-- [Progress and evidence register](docs/progress.md)
+The [GitHub Wiki](https://github.com/Sabareh/data-platform-lab/wiki) is the home for guides, progress records and screenshots.
+Executable manifests remain in this repository.
+
+### Step-by-step guides
+
+- [Windows Git and GitHub foundation](https://github.com/Sabareh/data-platform-lab/wiki/01-repository-foundation)
+- [Hyper-V network, concepts and troubleshooting](https://github.com/Sabareh/data-platform-lab/wiki/02-hyperv-network)
+- [RHEL ISO verification and first VM preparation](https://github.com/Sabareh/data-platform-lab/wiki/03-rhel-control-plane-vm)
+- [First boot, SSH and repository access, with screenshots](https://github.com/Sabareh/data-platform-lab/wiki/04-rhel-first-boot)
+- [Kubernetes node preparation and troubleshooting](https://github.com/Sabareh/data-platform-lab/wiki/05-kubernetes-node-preparation)
+- [GitHub Actions and local registry plan](https://github.com/Sabareh/data-platform-lab/wiki/06-ci-and-registry-plan)
+- [Control-plane bootstrap and Calico](https://github.com/Sabareh/data-platform-lab/wiki/07-control-plane-and-calico)
+- [Screenshot evidence index: 28 images](https://github.com/Sabareh/data-platform-lab/wiki/screenshots)
+- [Progress and evidence register](https://github.com/Sabareh/data-platform-lab/wiki/progress)
 
 The guides preserve commands from the build with explanations. Creation
 commands are historical instructions, not scripts to rerun blindly on an
