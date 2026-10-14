@@ -19,8 +19,14 @@ identifiers and unrelated personal storage-cleanup details are omitted.
 | CPU configuration | Verified command completion | Set-VMProcessor -Count 2 returned without errors |
 | Secure Boot, ISO and boot order | Reported verified | User reported each command succeeded |
 | VM boot | Verified | User reported RHEL installer boot menu visible |
-| RHEL installation | In progress | Language screen and completed installation not yet confirmed |
-| Guest network and internet | Pending | NAT configuration alone is not a connectivity test |
+| Installer software/time settings | Verified in screenshot | Server, English (US), Africa/Nairobi |
+| Administrator account selection | Verified in screenshot | Administrator sabare will be created; login/sudo not yet tested |
+| Hostname | Verified in screenshot | Current host name lab-control-01 |
+| Installer IPv4 settings | Reported verified | User reports 192.168.200.10 and DNS servers; summary shows eth0 connected |
+| Installation disk selection | Verified in screenshot | 40 GiB sda; Automatic; final summary has no destination warning |
+| RHEL installation | In progress, user reported | Final summary accepted settings; installation completion not yet confirmed |
+| Post-install networking and internet | Pending | Installer connection state alone is not an end-to-end connectivity test |
+| RHEL registration | Pending | Final installer summary shows Not registered |
 | Worker VMs | Planned | No creation evidence yet |
 | Kubernetes | Planned | kubeadm, runtime, CNI, storage and RBAC not installed |
 | Data/AI services and MCP | Planned | No deployments in the rebuilt lab |
@@ -37,6 +43,10 @@ root cause must remain unknown rather than being presented as a proven fix.
 - Use Hyper-V as the local substitute for infrastructure-provided VMs.
 - Run upstream Kubernetes inside the RHEL guests, not on OpenShift Local.
 - RHEL 9.8 chosen for this lab; reference environment version still unknown.
+- Server selected without GUI or optional add-ons; administer through terminal/SSH.
+- Guest address 192.168.200.10/24 with gateway 192.168.200.1; public DNS for the home lab.
+- Root password set privately; root password SSH was instructed off and needs verification.
+- Automatic storage selected; actual partition layout and swap remain to be checked.
 - Guest container runtime and compatible Kubernetes/CNI versions still pending.
 - Podman is intended for image workflows, not as the Kubernetes CRI runtime.
 - One control plane initially; high availability is not provided.
@@ -47,5 +57,6 @@ root cause must remain unknown rather than being presented as a proven fix.
 
 ## Next step
 
-Return to the VM console and establish the current installer screen before
-giving the next RHEL installation instruction.
+Wait for the installation result. On success, guide the first reboot from
+the virtual disk, then verify login, OS, storage, networking and permissions.
+Do not record the operating system or Kubernetes as installed until verified.

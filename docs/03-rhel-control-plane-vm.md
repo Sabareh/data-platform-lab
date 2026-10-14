@@ -117,14 +117,115 @@ The user confirmed reaching the RHEL installer boot menu. The next instruction
 was to choose **Install Red Hat Enterprise Linux 9.8**. Selecting it starts
 the installer; it does not alone prove that Linux has been installed.
 
+## Installer configuration (VM console)
+
+These are graphical installer steps, not PowerShell commands. The final
+Installation Summary screenshot confirms the selections below. No passwords
+or account-registration secrets are stored in this guide.
+
+### Software, language and time
+
+1. Select **Install Red Hat Enterprise Linux 9.8** in the boot menu.
+2. The resulting summary shows English (United States) language support and
+   English (US) keyboard. Choose a different keyboard if needed for your hardware.
+3. Open **Software Selection**, select **Server**, leave optional add-ons
+   unselected, then click **Done**.
+4. Open **Time & Date**, select **Africa / Nairobi**, then click **Done**.
+
+The graphical installer can install a system without a graphical desktop.
+Server was chosen over Server with GUI to conserve resources and practise
+terminal/SSH administration. Minimal Install was considered, but Server was
+selected as the broader starting environment. Neither installs Kubernetes.
+Application dashboards will later be accessed through the Windows browser.
+
+The time-zone setting controls local time display; it does not prove clock
+synchronisation. NTP/chrony verification remains pending.
+
+### Administrator account
+
+The user created `sabare`. The final summary explicitly states that
+administrator `sabare` will be created. Administrator membership permits
+privileged commands through `sudo` after installation; this still needs a
+post-installation test.
+
+A root password was also set privately. The setup instruction was to uncheck
+**Allow root SSH login with password** before saving. The user reported that
+step done, but the effective SSH policy must be checked after installation.
+Use the named administrator for routine access and keep both passwords out
+of Git, screenshots and command history.
+
+### Static network settings
+
+Open **Network & Host Name**:
+
+1. Enter `lab-control-01` in **Host Name** and click **Apply**.
+2. Select `Ethernet (eth0)` and click **Configure**.
+3. On **IPv4 Settings**, choose **Manual** and add the following settings.
+
+| Field | Value | Explanation |
+| --- | --- | --- |
+| Address | 192.168.200.10 | Fixed address for this VM on the lab network |
+| Netmask | 255.255.255.0 | Same subnet size as /24 |
+| Gateway | 192.168.200.1 | Windows lab adapter; routes outbound traffic through NAT |
+| DNS servers | 1.1.1.1, 8.8.8.8 | Public name resolvers for this home lab |
+| Search domains | Empty | No internal DNS search domain configured yet |
+
+4. On **General**, enable automatic connection when available, if shown.
+5. Save and turn the Ethernet toggle **ON**.
+6. Confirm the displayed address and DNS settings, then click **Done**.
+
+The adapter initially remained off after saving. Turning it on resolved the
+disconnected state. The user reported address `192.168.200.10` and the DNS
+servers displayed; the final summary confirms `Connected: eth0`.
+
+No successful DNS query, outbound HTTPS test or post-reboot persistence test
+has yet been recorded. The hostname does not automatically create a DNS
+record on Windows. Public DNS is a local lab choice, not a production setting.
+
+### Installation destination and final review
+
+Select the **40 GiB Microsoft virtual disk (`sda`)** under Installation
+Destination, choose **Automatic** storage configuration and click **Done**.
+The screenshot shows encryption unchecked. The final partition layout has
+not been inspected, so no specific LVM, filesystem or swap sizes are claimed.
+
+The disk page displayed only **1.97 MiB free**. That number was initially
+treated as evidence of existing partitions, but it alone did not establish
+a fault. The user clarified that no Reclaim Space dialog was present and
+provided a summary with no destination warning and **Begin Installation**
+enabled. No manual partition deletion or reclaim operation is confirmed.
+
+Final summary observed:
+
+| Item | Displayed state |
+| --- | --- |
+| Software Selection | Server |
+| Installation Source | Local media |
+| Time & Date | Africa/Nairobi |
+| Installation Destination | Automatic partitioning selected; no warning icon |
+| Network | Connected: eth0 |
+| Root Password | Root password is set |
+| User Creation | Administrator sabare will be created |
+| Connect to Red Hat | Not registered |
+| KDUMP | Enabled |
+| Security Profile | No profile selected |
+
+The summary also displayed an SMT-enabled warning. No CPU/SMT configuration
+change was made in response. No security profile selection does not imply
+that SELinux or the firewall is disabled; their actual state will be checked.
+
+The next instruction was to click **Begin Installation**, which commits the
+installation changes to the selected VM disk. The user subsequently reported
+that installation was running. Completion and a successful disk boot remain
+unverified.
+
 ## Pending installation work
 
-- Confirm the installer language screen and complete installation choices.
-- Configure hostname, local administrator account and guest networking.
-- Keep passwords out of scripts and public screenshots.
-- Choose a suitable minimal/server installation and virtual disk layout.
 - Complete installation, detach media or update boot order, then boot disk.
-- Verify OS version, network/DNS/HTTPS, registration and SSH access.
+- Log in as `sabare`, verify sudo access and inspect effective SSH policy.
+- Verify OS version, storage layout, swap, SELinux and firewall state.
+- Verify static address persistence, routing, DNS, HTTPS and time synchronisation.
+- Register the guest for package access and verify SSH from Windows.
 - Review actual VM configuration and resource consumption.
 - Create workers later; no worker VMs or Kubernetes cluster are verified yet.
 

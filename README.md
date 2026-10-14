@@ -60,11 +60,16 @@ available because it has only one control-plane node.
 - VM `lab-control-01` was created with a 40 GB expanding disk, 3 GB startup RAM and 2 virtual CPUs.
 - Linux-compatible Secure Boot was configured, the ISO attached and DVD boot selected.
 - The RHEL installer boot menu was reached.
+- Installer settings now select Server without a desktop, Africa/Nairobi,
+  administrator `sabare`, and automatic partitioning on the 40 GiB virtual disk.
+- Installer networking reports `eth0` connected with static address
+  `192.168.200.10/24`; hostname is `lab-control-01`.
 
 ## Current step
 
-RHEL installation is in progress. Installation completion, guest networking,
-registration, SSH access and Kubernetes installation are not yet verified.
+RHEL installation is in progress, as reported by the user after the final
+summary review. Installation completion, post-reboot networking, internet
+access, registration, SSH and Kubernetes installation are not yet verified.
 
 The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
