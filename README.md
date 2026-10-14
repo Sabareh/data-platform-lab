@@ -67,9 +67,11 @@ available because it has only one control-plane node.
 
 ## Current step
 
-RHEL installation is in progress, as reported by the user after the final
-summary review. Installation completion, post-reboot networking, internet
-access, registration, SSH and Kubernetes installation are not yet verified.
+RHEL has booted successfully and `sabare` can administer it using sudo and
+SSH from Windows. Static addressing, routing, DNS and an outbound HTTPS
+response have been verified. Red Hat registration and enabled BaseOS/AppStream
+repositories were reported successful. Repository metadata download is the
+current check; its completion is not yet confirmed. Kubernetes is not installed.
 
 The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
@@ -80,6 +82,7 @@ Windows restart was recommended but not explicitly confirmed in the evidence.
 - [Windows Git and GitHub foundation](docs/01-repository-foundation.md)
 - [Hyper-V network, concepts and troubleshooting](docs/02-hyperv-network.md)
 - [RHEL ISO verification and first VM preparation](docs/03-rhel-control-plane-vm.md)
+- [First boot, SSH and repository access, with screenshots](docs/04-rhel-first-boot.md)
 - [Progress and evidence register](docs/progress.md)
 
 The guides preserve commands from the build with explanations. Creation

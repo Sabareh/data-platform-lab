@@ -214,18 +214,23 @@ The summary also displayed an SMT-enabled warning. No CPU/SMT configuration
 change was made in response. No security profile selection does not imply
 that SELinux or the firewall is disabled; their actual state will be checked.
 
-The next instruction was to click **Begin Installation**, which commits the
-installation changes to the selected VM disk. The user subsequently reported
-that installation was running. Completion and a successful disk boot remain
-unverified.
+![RHEL installation summary with Server, Nairobi time zone, connected eth0 and administrator account selected](images/rhel-installation-summary.png)
+
+*Evidence: final settings before Begin Installation. The Not registered label
+is historical; registration was completed later. This screen alone does not
+prove installation completion.*
+
+The user clicked **Begin Installation**, subsequently reported completion,
+and reached the installed RHEL login prompt after reboot. See the
+[first-boot guide](04-rhel-first-boot.md) for screenshots and verification.
 
 ## Pending installation work
 
-- Complete installation, detach media or update boot order, then boot disk.
-- Log in as `sabare`, verify sudo access and inspect effective SSH policy.
+- Verify whether installation media remains attached and adjust disk boot order if needed.
+- Inspect effective SSH policy; named-user login and sudo have succeeded.
 - Verify OS version, storage layout, swap, SELinux and firewall state.
-- Verify static address persistence, routing, DNS, HTTPS and time synchronisation.
-- Register the guest for package access and verify SSH from Windows.
+- Verify time synchronisation; addressing, routing, DNS and HTTPS passed first-boot checks.
+- Complete the metadata-download check; registration and SSH login were reported successful.
 - Review actual VM configuration and resource consumption.
 - Create workers later; no worker VMs or Kubernetes cluster are verified yet.
 

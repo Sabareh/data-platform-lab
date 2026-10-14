@@ -3,8 +3,10 @@
 Updated: 2026-10-14 (Africa/Nairobi).
 
 This register records user-shared terminal output and completion reports.
-It is not an independent live audit of the Hyper-V host. Raw logs, device
-identifiers and unrelated personal storage-cleanup details are omitted.
+It is not an independent live audit of the Hyper-V host. Selected original
+screenshots are embedded in the installation and first-boot guides. They show
+only the personal lab; credentials, cookie-bearing HTTP output and unrelated
+personal storage-cleanup material are not included.
 
 | Milestone | Status | Evidence / limit |
 | --- | --- | --- |
@@ -20,13 +22,18 @@ identifiers and unrelated personal storage-cleanup details are omitted.
 | Secure Boot, ISO and boot order | Reported verified | User reported each command succeeded |
 | VM boot | Verified | User reported RHEL installer boot menu visible |
 | Installer software/time settings | Verified in screenshot | Server, English (US), Africa/Nairobi |
-| Administrator account selection | Verified in screenshot | Administrator sabare will be created; login/sudo not yet tested |
+| Administrator account | Verified | Console login succeeded and sudo whoami returned root |
 | Hostname | Verified in screenshot | Current host name lab-control-01 |
 | Installer IPv4 settings | Reported verified | User reports 192.168.200.10 and DNS servers; summary shows eth0 connected |
 | Installation disk selection | Verified in screenshot | 40 GiB sda; Automatic; final summary has no destination warning |
-| RHEL installation | In progress, user reported | Final summary accepted settings; installation completion not yet confirmed |
-| Post-install networking and internet | Pending | Installer connection state alone is not an end-to-end connectivity test |
-| RHEL registration | Pending | Final installer summary shows Not registered |
+| RHEL installation | Verified boot | Screenshot shows installed RHEL 9.8 login prompt after reboot |
+| Post-install address and routes | Verified in screenshot | eth0 UP, 192.168.200.10/24, default via 192.168.200.1 |
+| DNS and HTTPS | Verified in supplied output | getent returned IPv4; curl received HTTP/2 301 from Red Hat |
+| SSH service and TCP reachability | Verified | sshd active; Windows TcpTestSucceeded=True on port 22 |
+| SSH login | Reported verified | Initial password failures resolved after private password change |
+| RHEL registration | Reported verified | User confirmed interactive registration succeeded |
+| BaseOS and AppStream | Reported verified | User confirmed both enabled in dnf repolist |
+| Repository metadata download | In progress | sudo dnf makecache --refresh result pending |
 | Worker VMs | Planned | No creation evidence yet |
 | Kubernetes | Planned | kubeadm, runtime, CNI, storage and RBAC not installed |
 | Data/AI services and MCP | Planned | No deployments in the rebuilt lab |
@@ -57,6 +64,6 @@ root cause must remain unknown rather than being presented as a proven fix.
 
 ## Next step
 
-Wait for the installation result. On success, guide the first reboot from
-the virtual disk, then verify login, OS, storage, networking and permissions.
-Do not record the operating system or Kubernetes as installed until verified.
+Review the metadata-download result before proceeding to further guest
+preparation. See [the first-boot guide](04-rhel-first-boot.md) for commands,
+explanations and screenshot evidence. Kubernetes remains planned.
