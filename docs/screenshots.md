@@ -1,6 +1,6 @@
 # Screenshot evidence index
 
-Thirteen screenshots from the current Hyper-V/RHEL rebuild are preserved
+Twenty-two screenshots from the current Hyper-V/RHEL rebuild are preserved
 unchanged under `docs/images/` and embedded beside the relevant explanations.
 They include intermediate states and failures, not just successful outcomes.
 
@@ -39,8 +39,28 @@ See [first-boot and SSH guide](04-rhel-first-boot.md).
   rebuilt platform. Personal storage cleanup screenshots are also outside scope.
 - Later registration, successful SSH login and enabled repositories were
   reported in text; screenshots of those results were not supplied.
-- Repository metadata-download completion remains pending. No image or
-  successful result has been invented for that milestone.
+- RHEL metadata refresh and update-check success were reported in text; no screenshot is claimed for those results.
 
 The images include local lab names, private network addresses and virtual
 device identifiers. They contain no employer infrastructure screenshots.
+
+## Node preparation and package installation
+
+Nine additional originals were reviewed and copied from the Windows Pictures/Screenshots
+folder. They are embedded in [node preparation](05-kubernetes-node-preparation.md).
+The latest image also matches the attachment supplied with this documentation request.
+
+| Capture (2026-10-14, local time) | Screenshot | Evidence |
+| --- | --- | --- |
+| 06:26:17 | [Update preview](images/rhel-update-preview.png) | Preview only; Operation aborted is expected |
+| 06:45:24 | [Kernel and disks](images/rhel-kernel-disk-layout.png) | Updated running kernel and LVM layout |
+| 06:48:36 | [Low memory](images/rhel-low-memory-before-fix.png) | Historical low guest memory before fixed allocation |
+| 07:01:53 | [Swap disabled](images/rhel-swap-disabled.png) | Post-reboot Swap 0B and no active swap units |
+| 07:04:02 | [Node baseline](images/rhel-node-baseline.png) | Historical inactive chronyd, security checks, no CRI-O yet |
+| 07:12:39 | [Time and networking](images/rhel-time-and-kernel-networking.png) | Synchronised clock, modules loaded, sysctl values 1 |
+| 07:22:24 | [CRI-O repository](images/crio-repository-versions.png) | Metadata and available versions, not installation proof |
+| 14:15:14 | [Kubernetes repository](images/kubernetes-repository-ready.png) | Repository file and successful metadata refresh |
+| 14:19:32 | [Installed packages](images/kubernetes-packages-installed.png) | Versions 1.36.5, kubelet enabled, CRI-O active |
+
+Capture times identify source files, not the time every command on screen ran.
+No credentials, registration IDs or cookie-bearing output were found in these nine images.

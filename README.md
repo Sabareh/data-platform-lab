@@ -1,4 +1,4 @@
-﻿# Data Platform Lab
+# Data Platform Lab
 
 A personal lab for developing practical data engineering, AI engineering,
 and Kubernetes platform skills using synthetic data.
@@ -26,6 +26,7 @@ or support arrangements.
 | lab-control-01 | Kubernetes control plane | 3 GB | 2 |
 | lab-worker-01 | Application worker | 5 GB | 2 |
 | lab-worker-02 | Application worker | 5 GB | 2 |
+| Supporting VM (name pending) | GitHub Actions runner and local registry | TBD | TBD |
 
 These allocations are provisional. The initial cluster will not be highly
 available because it has only one control-plane node.
@@ -33,8 +34,9 @@ available because it has only one control-plane node.
 ## Planned platform
 
 - Upstream Kubernetes bootstrapped using kubeadm.
-- A CRI-compatible node runtime; selection is pending.
+- CRI-O 1.36 series as the Kubernetes node runtime.
 - Podman for building and testing container images.
+- GitHub Actions self-hosted runner and a local registry on one supporting RHEL VM (planned).
 - Department namespaces: cib, iam, bcb, ppb and operations.
 - Engineering namespaces: data-engineering and ai-engineering.
 - Shared services in dedicated namespaces as required.
@@ -67,11 +69,16 @@ available because it has only one control-plane node.
 
 ## Current step
 
-RHEL has booted successfully and `sabare` can administer it using sudo and
-SSH from Windows. Static addressing, routing, DNS and an outbound HTTPS
-response have been verified. Red Hat registration and enabled BaseOS/AppStream
-repositories were reported successful. Repository metadata download is the
-current check; its completion is not yet confirmed. Kubernetes is not installed.
+RHEL is updated and running with fixed 3 GB VM RAM, swap disabled after reboot,
+time synchronisation working and kernel networking settings applied.
+CRI-O installation was reported successful; its active state is visible in the
+latest screenshot. Kubernetes tools kubeadm, kubelet and kubectl are installed
+at 1.36.5, and kubelet is enabled. Red Hat metadata refresh and update checking
+were reported successful after investigating the subscription warning.
+
+The cluster has not been initialised. Next: verify CRI-O communication with
+crictl, then prepare firewall rules and cluster networking. Worker VMs,
+the supporting runner/registry VM and application deployments remain planned.
 
 The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
@@ -83,7 +90,9 @@ Windows restart was recommended but not explicitly confirmed in the evidence.
 - [Hyper-V network, concepts and troubleshooting](docs/02-hyperv-network.md)
 - [RHEL ISO verification and first VM preparation](docs/03-rhel-control-plane-vm.md)
 - [First boot, SSH and repository access, with screenshots](docs/04-rhel-first-boot.md)
-- [Screenshot evidence index: 13 images](docs/screenshots.md)
+- [Kubernetes node preparation and troubleshooting](docs/05-kubernetes-node-preparation.md)
+- [GitHub Actions and local registry plan](docs/06-ci-and-registry-plan.md)
+- [Screenshot evidence index: 22 images](docs/screenshots.md)
 - [Progress and evidence register](docs/progress.md)
 
 The guides preserve commands from the build with explanations. Creation

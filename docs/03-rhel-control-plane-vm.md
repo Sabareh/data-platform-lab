@@ -144,7 +144,7 @@ selected as the broader starting environment. Neither installs Kubernetes.
 Application dashboards will later be accessed through the Windows browser.
 
 The time-zone setting controls local time display; it does not prove clock
-synchronisation. NTP/chrony verification remains pending.
+synchronisation. NTP/chrony was verified later in the [node preparation guide](05-kubernetes-node-preparation.md).
 
 ![Server selected with optional software groups left unchecked](images/rhel-server-selection.png)
 

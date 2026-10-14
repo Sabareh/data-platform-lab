@@ -185,16 +185,12 @@ sudo dnf makecache --refresh
 
 `makecache` builds the local repository-metadata cache; `--refresh` expires
 cached metadata before the operation so DNF checks the repositories again.
-It does not install or upgrade packages. **Completion is pending user output.**
-Expected success includes `Metadata cache created`; do not record that message
-as observed until it is actually reported.
+It does not install or upgrade packages. The user subsequently supplied
+"Metadata cache created", confirming success.
 
-## Remaining checks
+## Continued preparation
 
-- Repository metadata retrieval result and subsequent package maintenance.
-- Storage layout, free guest space and swap configuration.
-- Time synchronisation, SELinux, firewall and effective SSH policy.
-- ISO attachment/boot order and resource allocation review.
-- Worker creation, followed by Kubernetes preparation and deployment.
-
-Kubernetes is not installed yet. Only the first RHEL VM has been verified.
+Storage, updates, fixed VM memory, persistent swap disablement, time
+synchronisation, SELinux/firewall inspection, CRI-O and Kubernetes package
+installation are documented in [node preparation](05-kubernetes-node-preparation.md).
+Effective SSH policy and cluster deployment remain pending.
