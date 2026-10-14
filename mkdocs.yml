@@ -1,0 +1,50 @@
+site_name: Data Platform Lab
+site_description: A practical journey through RHEL, Kubernetes and data platform engineering.
+site_url: https://sabareh.github.io/data-platform-lab/
+docs_dir: .site-docs
+site_dir: site
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+extra:
+  generator: false
+nav:
+  - Welcome: index.md
+  - Build the lab:
+      - Git and GitHub: 01-repository-foundation.md
+      - Hyper-V networking: 02-hyperv-network.md
+      - RHEL installation: 03-rhel-control-plane-vm.md
+      - First boot and SSH: 04-rhel-first-boot.md
+      - Kubernetes node preparation: 05-kubernetes-node-preparation.md
+      - Control plane and Calico: 07-control-plane-and-calico.md
+  - CI and registry plan: 06-ci-and-registry-plan.md
+  - Progress: progress.md
+  - Screenshots: screenshots.md

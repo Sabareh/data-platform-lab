@@ -85,6 +85,10 @@ Windows restart was recommended but not explicitly confirmed in the evidence.
 
 ## Documentation
 
+Read the standalone [documentation website](https://sabareh.github.io/data-platform-lab/).
+Publishing instructions are in [website/README.md](website/README.md).
+
+
 The [GitHub Wiki](https://github.com/Sabareh/data-platform-lab/wiki) is the home for guides, progress records and screenshots.
 Executable manifests remain in this repository.
 
@@ -104,7 +108,11 @@ The guides preserve commands from the build with explanations. Creation
 commands are historical instructions, not scripts to rerun blindly on an
 existing environment. Verification commands are identified separately.
 
-## Documentation approach
+## Documentation
+
+Read the standalone [documentation website](https://sabareh.github.io/data-platform-lab/).
+Publishing instructions are in [website/README.md](website/README.md).
+ approach
 
 For each milestone, record:
 

@@ -42,3 +42,8 @@ __pycache__/
 .idea/
 Thumbs.db
 Desktop.ini
+
+# Generated documentation website
+.site-docs/
+.wiki-source/
+site/
