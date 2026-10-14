@@ -1,0 +1,17 @@
+# Prepared configuration; application and network readiness are not yet verified.
+apiVersion: operator.tigera.io/v1
+kind: Installation
+metadata:
+  name: default
+spec:
+  variant: Calico
+  calicoNetwork:
+    linuxDataplane: Iptables
+    bgp: Disabled
+    ipPools:
+      - name: default-ipv4-ippool
+        blockSize: 26
+        cidr: 10.244.0.0/16
+        encapsulation: VXLAN
+        natOutgoing: Enabled
+        nodeSelector: all()

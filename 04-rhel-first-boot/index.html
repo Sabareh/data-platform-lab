@@ -1,0 +1,1112 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical journey through RHEL, Kubernetes and data platform engineering.">
+      
+      
+      
+        <link rel="canonical" href="https://sabareh.github.io/data-platform-lab/04-rhel-first-boot/">
+      
+      
+        <link rel="prev" href="../03-rhel-control-plane-vm/">
+      
+      
+        <link rel="next" href="../05-kubernetes-node-preparation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>First boot and SSH - Data Platform Lab</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#first-boot-networking-ssh-and-package-access" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Data Platform Lab" class="md-header__button md-logo" aria-label="Data Platform Lab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Platform Lab
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              First boot and SSH
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Data Platform Lab" class="md-nav__button md-logo" aria-label="Data Platform Lab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Platform Lab
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build the lab
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build the lab
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-repository-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git and GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-hyperv-network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyper-V networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-rhel-control-plane-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RHEL installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First boot and SSH
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First boot and SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-confirm-the-installed-system-boots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Confirm the installed system boots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-verify-administrator-access-and-network-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Verify administrator access and network settings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-test-name-resolution-and-https-separately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test name resolution and HTTPS separately
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-check-ssh-on-the-guest-and-from-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Check SSH on the guest and from Windows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verify-the-host-identity-and-log-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify the host identity and log in
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Verify the host identity and log in">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-register-with-red-hat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Register with Red Hat
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-verify-repository-configuration-then-metadata-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Verify repository configuration, then metadata access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continued-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continued preparation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-kubernetes-node-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes node preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-control-plane-and-calico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control plane and Calico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-ci-and-registry-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI and registry plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../screenshots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Screenshots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-confirm-the-installed-system-boots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Confirm the installed system boots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-verify-administrator-access-and-network-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Verify administrator access and network settings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-test-name-resolution-and-https-separately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test name resolution and HTTPS separately
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-check-ssh-on-the-guest-and-from-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Check SSH on the guest and from Windows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verify-the-host-identity-and-log-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify the host identity and log in
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Verify the host identity and log in">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-register-with-red-hat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Register with Red Hat
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-verify-repository-configuration-then-metadata-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Verify repository configuration, then metadata access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continued-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continued preparation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="first-boot-networking-ssh-and-package-access">First boot, networking, SSH and package access<a class="headerlink" href="#first-boot-networking-ssh-and-package-access" title="Permanent link">&para;</a></h1>
+<p>Evidence captured during the guided build on 2026-10-14. Commands labelled
+RHEL run inside the VM, either through its console or an established SSH
+session. Windows commands run in PowerShell. Check the prompt before typing.</p>
+<h2 id="1-confirm-the-installed-system-boots">1. Confirm the installed system boots<a class="headerlink" href="#1-confirm-the-installed-system-boots" title="Permanent link">&para;</a></h2>
+<p>After installation, select <strong>Reboot System</strong>. The observed result was the
+RHEL 9.8 login prompt for <code>lab-control-01</code>, rather than the installation menu.</p>
+<p><img alt="RHEL 9.8 text login prompt for lab-control-01 after reboot" src="../images/rhel-first-boot.png" /></p>
+<p><em>Evidence: the installed system reaches its login prompt. The on-screen
+Cockpit activation suggestion was not executed as part of this milestone.</em></p>
+<p>Log in locally as <code>sabare</code> using the privately chosen password. Linux terminal
+password prompts do not echo characters or asterisks.</p>
+<p><img alt="Successful local console login as sabare on lab-control-01" src="../images/rhel-console-login.png" /></p>
+<p><em>Evidence: named-user console login works. This screen predates the SSH test
+and should not be used as proof of remote authentication.</em></p>
+<h2 id="2-verify-administrator-access-and-network-settings">2. Verify administrator access and network settings<a class="headerlink" href="#2-verify-administrator-access-and-network-settings" title="Permanent link">&para;</a></h2>
+<p>Run in <strong>RHEL</strong>, one command at a time:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>whoami
+ip<span class="w"> </span>-br<span class="w"> </span>address
+ip<span class="w"> </span>route
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+<th>Observed result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sudo whoami</code></td>
+<td>Test ability to run a command as administrator</td>
+<td><code>root</code></td>
+</tr>
+<tr>
+<td><code>ip -br address</code></td>
+<td>Brief interface and address listing</td>
+<td><code>eth0</code> UP, <code>192.168.200.10/24</code></td>
+</tr>
+<tr>
+<td><code>ip route</code></td>
+<td>Inspect traffic-routing rules</td>
+<td>Default via <code>192.168.200.1</code>, device <code>eth0</code></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="RHEL terminal confirming sudo access, static IPv4 address and default route" src="../images/rhel-sudo-and-routing.png" /></p>
+<p><em>Evidence: address and gateway settings survived the installation reboot.
+The local subnet route lets nodes communicate directly; the default route
+handles destinations outside that subnet. This does not by itself prove
+internet access. The visible IPv6 address is a local lab link-local address.</em></p>
+<h2 id="3-test-name-resolution-and-https-separately">3. Test name resolution and HTTPS separately<a class="headerlink" href="#3-test-name-resolution-and-https-separately" title="Permanent link">&para;</a></h2>
+<p>Run in <strong>RHEL</strong>:</p>
+<div class="highlight"><pre><span></span><code>getent<span class="w"> </span>ahostsv4<span class="w"> </span>www.redhat.com
+curl<span class="w"> </span>-I<span class="w"> </span>--connect-timeout<span class="w"> </span><span class="m">10</span><span class="w"> </span>--max-time<span class="w"> </span><span class="m">30</span><span class="w"> </span>https://www.redhat.com
+</code></pre></div>
+<p><code>getent</code> uses the configured name-resolution system. The observed IPv4
+response was <code>23.42.240.53</code>; it may differ on another run. Repeated STREAM,
+DGRAM and RAW entries are normal socket-type listings.</p>
+<p><img alt="DNS lookup returning IPv4 records for www.redhat.com" src="../images/rhel-dns-check.png" /></p>
+<p><em>Evidence: the corrected hostname lookup returns records. The preceding
+mistyped lookup produced no result; the successful command uses www.redhat.com.</em></p>
+<p><code>curl -I</code> retrieves headers rather than the page body, with bounded connection
+and total timeouts. It returned <strong>HTTP/2 301</strong>, redirecting to
+<code>https://www.redhat.com/en</code>. This demonstrates an HTTPS response from that
+endpoint with normal certificate checking, not access to every internet site.</p>
+<p>The HTTP-header screenshot is intentionally omitted because it includes
+Set-Cookie values. The result is transcribed above without those values.</p>
+<h2 id="4-check-ssh-on-the-guest-and-from-windows">4. Check SSH on the guest and from Windows<a class="headerlink" href="#4-check-ssh-on-the-guest-and-from-windows" title="Permanent link">&para;</a></h2>
+<p>Run in <strong>RHEL</strong>:</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>is-active<span class="w"> </span>sshd
+</code></pre></div>
+<p>It returned <code>active</code>. <code>sshd</code> is the server accepting encrypted terminal
+connections; this command only checks its current service state.</p>
+<p>Run in <strong>Windows PowerShell</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">Test-NetConnection</span> <span class="n">-ComputerName</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">200</span><span class="p">.</span><span class="n">10</span> <span class="n">-Port</span> <span class="n">22</span>
+</code></pre></div>
+<p><img alt="Windows PowerShell showing a successful TCP connection to the VM on port 22" src="../images/windows-ssh-port-check.png" /></p>
+<p><em>Evidence: Windows reached port 22 through reservoir-lab-switch, from
+192.168.200.1 to 192.168.200.10. TCP success is separate from SSH authentication.</em></p>
+<h2 id="5-verify-the-host-identity-and-log-in">5. Verify the host identity and log in<a class="headerlink" href="#5-verify-the-host-identity-and-log-in" title="Permanent link">&para;</a></h2>
+<p>In the <strong>trusted Hyper-V RHEL console</strong>, obtain the server public-key fingerprint:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ssh-keygen<span class="w"> </span>-lf<span class="w"> </span>/etc/ssh/ssh_host_ed25519_key.pub
+</code></pre></div>
+<p>This reads an existing public key; it does not create a new key. The first
+attempt contained a command-name typo; rerunning <code>ssh-keygen</code> correctly worked.</p>
+<p>From <strong>Windows PowerShell</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">ssh</span> <span class="n">sabare</span><span class="nv">@192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">200</span><span class="p">.</span><span class="n">10</span>
+</code></pre></div>
+<p>Compare the ED25519 SHA-256 fingerprint with the console output before
+accepting the first connection. Accept only a match. Windows then stores the
+host key in known_hosts. Enter the local <code>sabare</code> password when prompted;
+this is not the Red Hat website account password.</p>
+<h3 id="authentication-troubleshooting">Authentication troubleshooting<a class="headerlink" href="#authentication-troubleshooting" title="Permanent link">&para;</a></h3>
+<p>The first login failed after password attempts, although TCP connectivity
+worked. Inspect the server log from the already-open <strong>RHEL console</strong>:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>sshd<span class="w"> </span>--since<span class="w"> </span><span class="s2">"15 minutes ago"</span><span class="w"> </span>--no-pager<span class="w"> </span>-n<span class="w"> </span><span class="m">30</span>
+</code></pre></div>
+<p>This selects recent SSH service logs without entering a pager. The output
+showed <code>pam_unix</code> authentication failures and failed passwords for <code>sabare</code>;
+it did not establish a network failure or an explicit account lock.</p>
+<p><img alt="SSH journal showing failed password authentication for the lab user" src="../images/rhel-ssh-authentication-log.png" /></p>
+<p><em>Troubleshooting evidence: the guest received the Windows connection but
+rejected password authentication. These are local lab addresses and usernames;
+no password is printed. Later login success was reported by the user.</em></p>
+<p>The user changed their own password in the console with:</p>
+<div class="highlight"><pre><span></span><code>passwd
+</code></pre></div>
+<p>This prompts privately for the current password and the new password twice.
+It is a troubleshooting action, not a command to run on every login. No
+password is recorded here. After retrying SSH, the user confirmed login
+worked with the new password. The exact cause of the original mismatch
+(for example typing or keyboard layout) was not proven.</p>
+<h2 id="6-register-with-red-hat">6. Register with Red Hat<a class="headerlink" href="#6-register-with-red-hat" title="Permanent link">&para;</a></h2>
+<p>In the <strong>RHEL SSH session</strong>:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>subscription-manager<span class="w"> </span>identity
+</code></pre></div>
+<p>The result was that the system was not yet registered. The user then ran:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>subscription-manager<span class="w"> </span>register
+</code></pre></div>
+<p>Enter the local <code>sabare</code> password at a sudo prompt, then the Red Hat login ID
+and account password at the registration prompts. Do not place credentials
+in command arguments, Git or screenshots. Registration was reported successful;
+system UUID and account/organisation details are not included in this repo.</p>
+<h2 id="7-verify-repository-configuration-then-metadata-access">7. Verify repository configuration, then metadata access<a class="headerlink" href="#7-verify-repository-configuration-then-metadata-access" title="Permanent link">&para;</a></h2>
+<p>In <strong>RHEL</strong>:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>dnf<span class="w"> </span>repolist<span class="w"> </span>--enabled
+</code></pre></div>
+<p>The user confirmed BaseOS and AppStream are enabled. These supply core OS
+packages and additional application/tool packages. An enabled listing alone
+does not prove repository metadata can be downloaded.</p>
+<p>The next command was issued as the metadata-access test:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span>--refresh
+</code></pre></div>
+<p><code>makecache</code> builds the local repository-metadata cache; <code>--refresh</code> expires
+cached metadata before the operation so DNF checks the repositories again.
+It does not install or upgrade packages. The user subsequently supplied
+"Metadata cache created", confirming success.</p>
+<h2 id="continued-preparation">Continued preparation<a class="headerlink" href="#continued-preparation" title="Permanent link">&para;</a></h2>
+<p>Storage, updates, fixed VM memory, persistent swap disablement, time
+synchronisation, SELinux/firewall inspection, CRI-O and Kubernetes package
+installation are documented in <a href="../05-kubernetes-node-preparation/">node preparation</a>.
+Effective SSH policy and cluster deployment remain pending.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../03-rhel-control-plane-vm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: RHEL installation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                RHEL installation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../05-kubernetes-node-preparation/" class="md-footer__link md-footer__link--next" aria-label="Next: Kubernetes node preparation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Kubernetes node preparation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

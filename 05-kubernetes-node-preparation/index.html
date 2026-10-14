@@ -1,0 +1,1271 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical journey through RHEL, Kubernetes and data platform engineering.">
+      
+      
+      
+        <link rel="canonical" href="https://sabareh.github.io/data-platform-lab/05-kubernetes-node-preparation/">
+      
+      
+        <link rel="prev" href="../04-rhel-first-boot/">
+      
+      
+        <link rel="next" href="../07-control-plane-and-calico/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Kubernetes node preparation - Data Platform Lab</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#preparing-the-first-rhel-kubernetes-node" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Data Platform Lab" class="md-header__button md-logo" aria-label="Data Platform Lab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Platform Lab
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Kubernetes node preparation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Data Platform Lab" class="md-nav__button md-logo" aria-label="Data Platform Lab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Platform Lab
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build the lab
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build the lab
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-repository-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git and GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-hyperv-network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyper-V networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-rhel-control-plane-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RHEL installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-rhel-first-boot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First boot and SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes node preparation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes node preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#current-outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current outcome
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-update-rhel-and-inspect-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Update RHEL and inspect storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-correct-the-vm-memory-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Correct the VM memory allocation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-disable-swap-persistently" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Disable swap persistently
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-inspect-security-cgroups-and-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Inspect security, cgroups and time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-prepare-kernel-modules-and-packet-forwarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Prepare kernel modules and packet forwarding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-install-cri-o" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Install CRI-O
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Install CRI-O">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#red-hat-subscription-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Red Hat subscription warning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-install-kubernetes-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Install Kubernetes packages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-communication-subsequently-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime communication (subsequently verified)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-control-plane-and-calico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control plane and Calico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-ci-and-registry-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI and registry plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../screenshots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Screenshots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#current-outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current outcome
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-update-rhel-and-inspect-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Update RHEL and inspect storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-correct-the-vm-memory-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Correct the VM memory allocation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-disable-swap-persistently" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Disable swap persistently
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-inspect-security-cgroups-and-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Inspect security, cgroups and time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-prepare-kernel-modules-and-packet-forwarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Prepare kernel modules and packet forwarding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-install-cri-o" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Install CRI-O
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Install CRI-O">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#red-hat-subscription-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Red Hat subscription warning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-install-kubernetes-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Install Kubernetes packages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-communication-subsequently-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime communication (subsequently verified)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="preparing-the-first-rhel-kubernetes-node">Preparing the first RHEL Kubernetes node<a class="headerlink" href="#preparing-the-first-rhel-kubernetes-node" title="Permanent link">&para;</a></h1>
+<p>Recorded 2026-10-14 (Africa/Nairobi). These commands document the guided build;
+do not rerun configuration writes blindly. Unless labelled Windows, commands
+run in the RHEL SSH session as <code>sabare</code>, with <code>sudo</code> where required.</p>
+<h2 id="current-outcome">Current outcome<a class="headerlink" href="#current-outcome" title="Permanent link">&para;</a></h2>
+<p>This chapter records preparation through package installation. Subsequent runtime checks, successful cluster initialisation and operator readiness are documented in <a href="../07-control-plane-and-calico/">control-plane and Calico preparation</a>.</p>
+<h2 id="1-update-rhel-and-inspect-storage">1. Update RHEL and inspect storage<a class="headerlink" href="#1-update-rhel-and-inspect-storage" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span>--refresh
+sudo<span class="w"> </span>dnf<span class="w"> </span>upgrade<span class="w"> </span>--refresh<span class="w"> </span>--assumeno
+sudo<span class="w"> </span>dnf<span class="w"> </span>upgrade<span class="w"> </span>--refresh
+sudo<span class="w"> </span>reboot
+</code></pre></div>
+<p>Metadata retrieval succeeded. The preview proposed four installations and 220
+upgrades, approximately 1 GB to download. <code>--assumeno</code> intentionally ends with
+<code>Operation aborted</code>; it is a preview, not a failed installation.
+The actual upgrade subsequently reported <code>Complete!</code> in shared terminal output.</p>
+<p><img alt="RHEL update preview, intentionally cancelled" src="../images/rhel-update-preview.png" /></p>
+<p>Reconnect from Windows using <code>ssh sabare@192.168.200.10</code>, then inspect:</p>
+<div class="highlight"><pre><span></span><code>uname<span class="w"> </span>-r
+lsblk<span class="w"> </span>-o<span class="w"> </span>NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS
+df<span class="w"> </span>-h<span class="w"> </span>/<span class="w"> </span>/boot<span class="w"> </span>/boot/efi
+swapon<span class="w"> </span>--show
+free<span class="w"> </span>-h
+</code></pre></div>
+<p>The running kernel became <code>5.14.0-687.57.1.el9_8.x86_64</code>. The 40 GiB disk has
+an EFI partition, an XFS boot partition and LVM logical volumes for root and
+swap. Root had approximately 33 GiB available. LVM separates logical storage
+allocation from physical partitions; XFS is the filesystem used for root.</p>
+<p><img alt="Updated kernel and disk layout before disabling swap" src="../images/rhel-kernel-disk-layout.png" /></p>
+<h2 id="2-correct-the-vm-memory-allocation">2. Correct the VM memory allocation<a class="headerlink" href="#2-correct-the-vm-memory-allocation" title="Permanent link">&para;</a></h2>
+<p>The guest initially reported only 489 MiB RAM. Hyper-V inspection showed Dynamic
+Memory enabled, a 512 MiB minimum and 3072 MiB startup allocation. Samples were
+taken at different times; their memory numbers need not match exactly.</p>
+<p><img alt="Low guest memory and active swap before the fix" src="../images/rhel-low-memory-before-fix.png" /></p>
+<p>Shut down gracefully from RHEL:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>shutdown<span class="w"> </span>-h<span class="w"> </span>now
+</code></pre></div>
+<p>In <strong>Windows PowerShell</strong>, confirm the VM is Off before changing memory:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">Get-VM</span> <span class="n">-Name</span> <span class="s2">"lab-control-01"</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">Name</span><span class="p">,</span> <span class="n">State</span>
+<span class="nb">Set-VMMemory</span> <span class="n">-VMName</span> <span class="s2">"lab-control-01"</span> <span class="n">-DynamicMemoryEnabled</span> <span class="nv">$false</span> <span class="n">-StartupBytes</span> <span class="n">3GB</span>
+<span class="nb">Get-VMMemory</span> <span class="n">-VMName</span> <span class="s2">"lab-control-01"</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">DynamicMemoryEnabled</span><span class="p">,</span> <span class="p">@{</span><span class="n">Name</span><span class="p">=</span><span class="s1">'StartupMiB'</span><span class="p">;</span><span class="n">Expression</span><span class="p">={</span><span class="nv">$_</span><span class="p">.</span><span class="n">Startup</span> <span class="p">/</span> <span class="n">1MB</span><span class="p">}}</span>
+<span class="nb">Start-VM</span> <span class="n">-Name</span> <span class="s2">"lab-control-01"</span>
+</code></pre></div>
+<p>The user confirmed False and 3072. After boot, RHEL showed about 2.6 GiB usable
+RAM. Fixed allocation provides a predictable baseline for this node.</p>
+<h2 id="3-disable-swap-persistently">3. Disable swap persistently<a class="headerlink" href="#3-disable-swap-persistently" title="Permanent link">&para;</a></h2>
+<p>This lab uses a no-swap Kubernetes baseline. Kubernetes can support explicitly
+configured swap use, but that is outside this initial setup. Disabling swap
+does not create more RAM: workloads still need appropriate memory limits.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>swapoff<span class="w"> </span>-a
+swapon<span class="w"> </span>--show
+cat<span class="w"> </span>/etc/fstab
+sudo<span class="w"> </span>cp<span class="w"> </span>-a<span class="w"> </span>/etc/fstab<span class="w"> </span><span class="s2">"/etc/fstab.before-disable-swap.</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M%S<span class="k">)</span><span class="s2">"</span>
+sudo<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">'\|^/dev/mapper/rhel_lab--control--01-swap[[:space:]]|s|^|# Disabled for Kubernetes: |'</span><span class="w"> </span>/etc/fstab
+sudo<span class="w"> </span>findmnt<span class="w"> </span>--verify<span class="w"> </span>--verbose
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>reboot
+</code></pre></div>
+<p>The edit targets the exact swap line observed on this VM. The backup preserves
+the original mount configuration. <code>findmnt</code> validates it; daemon-reload refreshes
+systemd's generated units. The swap logical volume was not deleted.</p>
+<p>After reconnecting:</p>
+<div class="highlight"><pre><span></span><code>swapon<span class="w"> </span>--show
+free<span class="w"> </span>-h
+systemctl<span class="w"> </span>--type<span class="o">=</span>swap<span class="w"> </span>--state<span class="o">=</span>active
+</code></pre></div>
+<p>Verified after reboot: no active swap devices, Swap 0B, zero active swap units.</p>
+<p><img alt="Persistent swap disablement verified after reboot" src="../images/rhel-swap-disabled.png" /></p>
+<h2 id="4-inspect-security-cgroups-and-time">4. Inspect security, cgroups and time<a class="headerlink" href="#4-inspect-security-cgroups-and-time" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>timedatectl
+systemctl<span class="w"> </span>is-active<span class="w"> </span>chronyd
+chronyc<span class="w"> </span>tracking
+chronyc<span class="w"> </span>sources<span class="w"> </span>-v
+getenforce
+systemctl<span class="w"> </span>is-active<span class="w"> </span>firewalld
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--get-active-zones
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--list-all
+stat<span class="w"> </span>-fc<span class="w"> </span>%T<span class="w"> </span>/sys/fs/cgroup
+rpm<span class="w"> </span>-q<span class="w"> </span>podman<span class="w"> </span>containerd<span class="w"> </span>containerd.io<span class="w"> </span>cri-o
+</code></pre></div>
+<p>Initial results: chronyd inactive, SELinux Enforcing, firewalld active on eth0
+in the public zone, and cgroup2fs. Podman was installed; CRI-O was not yet installed.
+The chronyc error <code>506 Cannot talk to daemon</code> occurred because chronyd was stopped.</p>
+<p><img alt="Initial diagnostic state before enabling time sync and installing CRI-O" src="../images/rhel-node-baseline.png" /></p>
+<p>Enable time synchronisation and inspect it after allowing time to contact servers:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>chronyd
+systemctl<span class="w"> </span>is-enabled<span class="w"> </span>chronyd
+systemctl<span class="w"> </span>is-active<span class="w"> </span>chronyd
+chronyc<span class="w"> </span>tracking
+chronyc<span class="w"> </span>sources<span class="w"> </span>-v
+timedatectl
+</code></pre></div>
+<p>Verified: enabled, active, Leap status Normal, a selected <code>^*</code> time source and
+System clock synchronized: yes. Correct time helps certificate validation and
+correlating logs across nodes. SELinux and firewalld were not disabled at this stage. Firewalld was later disabled during Calico preparation.</p>
+<h2 id="5-prepare-kernel-modules-and-packet-forwarding">5. Prepare kernel modules and packet forwarding<a class="headerlink" href="#5-prepare-kernel-modules-and-packet-forwarding" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/modules-load.d/k8s.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">overlay</span>
+<span class="s">br_netfilter</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>modprobe<span class="w"> </span>overlay
+sudo<span class="w"> </span>modprobe<span class="w"> </span>br_netfilter
+
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/99-kubernetes.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">net.ipv4.ip_forward = 1</span>
+<span class="s">net.bridge.bridge-nf-call-iptables = 1</span>
+<span class="s">net.bridge.bridge-nf-call-ip6tables = 1</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>sysctl<span class="w"> </span>--load<span class="o">=</span>/etc/sysctl.d/99-kubernetes.conf
+
+lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(overlay|br_netfilter)\b'</span>
+sysctl<span class="w"> </span>net.ipv4.ip_forward<span class="w"> </span>net.bridge.bridge-nf-call-iptables<span class="w"> </span>net.bridge.bridge-nf-call-ip6tables
+</code></pre></div>
+<p>Overlay supports layered container filesystems. Bridge netfilter allows filtering
+of bridged traffic; requirements depend on the eventual network plugin. IPv4
+forwarding permits routing between interfaces. The files persist the settings;
+modprobe and sysctl apply them immediately. Both modules and three values of 1
+were observed. Persistence after a further reboot has not yet been demonstrated.</p>
+<p><img alt="Time synchronised and kernel networking settings applied" src="../images/rhel-time-and-kernel-networking.png" /></p>
+<h2 id="6-install-cri-o">6. Install CRI-O<a class="headerlink" href="#6-install-cri-o" title="Permanent link">&para;</a></h2>
+<p>Podman builds and tests images directly. CRI-O serves Kubernetes' Container Runtime
+Interface (CRI), managing containers requested by the kubelet. They have different
+roles and can coexist. This lab selected the 1.36 CRI-O and Kubernetes series.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/cri-o.repo<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">[cri-o]</span>
+<span class="s">name=CRI-O v1.36</span>
+<span class="s">baseurl=https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v1.36/rpm/</span>
+<span class="s">enabled=1</span>
+<span class="s">gpgcheck=1</span>
+<span class="s">gpgkey=https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v1.36/rpm/repodata/repomd.xml.key</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span>--refresh<span class="w"> </span>--disablerepo<span class="o">=</span><span class="s1">'*'</span><span class="w"> </span>--enablerepo<span class="o">=</span>cri-o
+sudo<span class="w"> </span>dnf<span class="w"> </span>list<span class="w"> </span>--showduplicates<span class="w"> </span>cri-o
+sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>cri-o<span class="w"> </span>container-selinux<span class="w"> </span>--assumeno
+sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>cri-o<span class="w"> </span>container-selinux
+rpm<span class="w"> </span>-q<span class="w"> </span>cri-o<span class="w"> </span>container-selinux<span class="w"> </span>podman
+crio<span class="w"> </span>--version
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>crio
+systemctl<span class="w"> </span>is-enabled<span class="w"> </span>crio
+systemctl<span class="w"> </span>is-active<span class="w"> </span>crio
+</code></pre></div>
+<p><img alt="CRI-O repository metadata and available versions" src="../images/crio-repository-versions.png" /></p>
+<p>The preview selected cri-o 1.36.7-150500.1.1, with container-selinux already
+installed and no removals. Initially only the preview was run, so <code>crio: command
+not found</code> and missing service errors followed. Running the actual installation
+resolved this. The user reported CRI-O installed, enabled and active; the later
+Kubernetes screenshot independently shows its active service state. A captured
+post-install <code>crio --version</code> result is still absent.</p>
+<h3 id="red-hat-subscription-warning">Red Hat subscription warning<a class="headerlink" href="#red-hat-subscription-warning" title="Permanent link">&para;</a></h3>
+<p>DNF displayed a registered-but-not-receiving-updates warning. It was investigated
+separately from CRI-O's community repository:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>subscription-manager<span class="w"> </span>identity
+sudo<span class="w"> </span>subscription-manager<span class="w"> </span>status
+sudo<span class="w"> </span>subscription-manager<span class="w"> </span>refresh
+sudo<span class="w"> </span>subscription-manager<span class="w"> </span>repos<span class="w"> </span>--list-enabled
+sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span>--refresh<span class="w"> </span>--disablerepo<span class="o">=</span><span class="s1">'*'</span><span class="w"> </span>--enablerepo<span class="o">=</span>rhel-9-for-x86_64-baseos-rpms<span class="w"> </span>--enablerepo<span class="o">=</span>rhel-9-for-x86_64-appstream-rpms
+sudo<span class="w"> </span>dnf<span class="w"> </span>check-update<span class="w"> </span>--disablerepo<span class="o">=</span><span class="s1">'*'</span><span class="w"> </span>--enablerepo<span class="o">=</span>rhel-9-for-x86_64-baseos-rpms<span class="w"> </span>--enablerepo<span class="o">=</span>rhel-9-for-x86_64-appstream-rpms
+<span class="nb">printf</span><span class="w"> </span><span class="s1">'DNF exit code: %s\n'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$?</span><span class="s2">"</span>
+</code></pre></div>
+<p>The user reported successful metadata refresh and update checking. That confirms
+repository access at the time of testing, not that the warning disappeared.
+Under Simple Content Access, Disabled status alone is not proof of lost access;
+the actual status output was not supplied. No subscription UUIDs are published.
+DNF check-update returns 0 for no updates, 100 for updates available, 1 for error.</p>
+<h2 id="7-install-kubernetes-packages">7. Install Kubernetes packages<a class="headerlink" href="#7-install-kubernetes-packages" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/kubernetes.repo<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">[kubernetes]</span>
+<span class="s">name=Kubernetes v1.36</span>
+<span class="s">baseurl=https://pkgs.k8s.io/core:/stable:/v1.36/rpm/</span>
+<span class="s">enabled=1</span>
+<span class="s">gpgcheck=1</span>
+<span class="s">gpgkey=https://pkgs.k8s.io/core:/stable:/v1.36/rpm/repodata/repomd.xml.key</span>
+<span class="s">exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span>--refresh<span class="w"> </span>--disablerepo<span class="o">=</span><span class="s1">'*'</span><span class="w"> </span>--enablerepo<span class="o">=</span>kubernetes
+sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>kubelet<span class="w"> </span>kubeadm<span class="w"> </span>kubectl<span class="w"> </span>cri-tools<span class="w"> </span>--disableexcludes<span class="o">=</span>kubernetes
+</code></pre></div>
+<p><img alt="Kubernetes repository configured and metadata retrieved" src="../images/kubernetes-repository-ready.png" /></p>
+<p>The exclusion prevents ordinary DNF updates from unexpectedly upgrading these
+packages. The explicit override permits this planned installation. Package
+signature verification stays enabled. This command selects the available patch
+from the 1.36 stream; it is not an exact historical patch pin for future rebuilds.</p>
+<div class="highlight"><pre><span></span><code>rpm<span class="w"> </span>-q<span class="w"> </span>kubelet<span class="w"> </span>kubeadm<span class="w"> </span>kubectl<span class="w"> </span>cri-tools
+kubeadm<span class="w"> </span>version<span class="w"> </span>-o<span class="w"> </span>short
+kubelet<span class="w"> </span>--version
+kubectl<span class="w"> </span>version<span class="w"> </span>--client
+crictl<span class="w"> </span>--version
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>kubelet
+systemctl<span class="w"> </span>is-enabled<span class="w"> </span>kubelet
+systemctl<span class="w"> </span>is-active<span class="w"> </span>crio
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Observed version/state</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kubeadm</td>
+<td>1.36.5</td>
+<td>Bootstraps and joins nodes</td>
+</tr>
+<tr>
+<td>kubelet</td>
+<td>1.36.5; enabled</td>
+<td>Node agent</td>
+</tr>
+<tr>
+<td>kubectl</td>
+<td>1.36.5</td>
+<td>Kubernetes API client</td>
+</tr>
+<tr>
+<td>cri-tools</td>
+<td>1.36.0</td>
+<td>Runtime diagnostics via crictl</td>
+</tr>
+<tr>
+<td>kubernetes-cni</td>
+<td>1.9.1</td>
+<td>Network-plugin binaries; not a deployed cluster network</td>
+</tr>
+<tr>
+<td>CRI-O service</td>
+<td>active</td>
+<td>Node container runtime</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Installation complete, matching Kubernetes versions and service checks" src="../images/kubernetes-packages-installed.png" /></p>
+<p>Enabling kubelet schedules startup at boot; this is not evidence of a running
+control plane. Subsequent kubeadm initialisation is recorded in the next guide; worker joins remain pending.</p>
+<h2 id="runtime-communication-subsequently-verified">Runtime communication (subsequently verified)<a class="headerlink" href="#runtime-communication-subsequently-verified" title="Permanent link">&para;</a></h2>
+<p>These checks were subsequently completed; see <a href="../07-control-plane-and-calico/">the evidence</a>:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/crictl.yaml<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">runtime-endpoint: unix:///var/run/crio/crio.sock</span>
+<span class="s">image-endpoint: unix:///var/run/crio/crio.sock</span>
+<span class="s">timeout: 10</span>
+<span class="s">debug: false</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>crictl<span class="w"> </span>version
+sudo<span class="w"> </span>crictl<span class="w"> </span>info
+sudo<span class="w"> </span>crictl<span class="w"> </span>ps<span class="w"> </span>-a
+</code></pre></div>
+<p>This configures the diagnostic client, not kubelet. Expected evidence is CRI-O
+responding with CRI API v1 and RuntimeReady true. NetworkReady may be false before
+CNI configuration. An empty container list is normal before bootstrap.
+Firewall rules, Pod/Service address ranges, CNI selection, runtime/cgroup checks
+and SELinux compatibility must be settled before cluster initialisation.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://v1-36.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">Kubernetes 1.36 kubeadm installation</a></li>
+<li><a href="https://github.com/cri-o/packaging">CRI-O packaging</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/">crictl diagnostics</a></li>
+<li><a href="https://access.redhat.com/solutions/7080864">Red Hat Simple Content Access status</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../04-rhel-first-boot/" class="md-footer__link md-footer__link--prev" aria-label="Previous: First boot and SSH">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                First boot and SSH
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../07-control-plane-and-calico/" class="md-footer__link md-footer__link--next" aria-label="Next: Control plane and Calico">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Control plane and Calico
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
