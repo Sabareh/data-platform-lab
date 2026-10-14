@@ -71,14 +71,14 @@ available because it has only one control-plane node.
 
 RHEL is updated and running with fixed 3 GB VM RAM, swap disabled after reboot,
 time synchronisation working and kernel networking settings applied.
-CRI-O 1.36.7 responds through CRI API v1. Kubernetes 1.36.5 initialised
-successfully and the Calico 3.33.0 operator is 1/1 Running. The node was
-NotReady and CoreDNS Pending before Pod-network configuration.
+CRI-O 1.36.7 responds through CRI API v1. The Kubernetes 1.36.5 control plane is
+Ready, Calico VXLAN is available, both CoreDNS Pods are Running, and internal
+and external Pod DNS tests succeeded. The test Pod was deleted.
 
-Next: apply the prepared Calico VXLAN configuration with BGP disabled and
-Pod network 10.244.0.0/16, then verify readiness. Firewalld is now disabled
-following Calico preparation; SELinux remains Enforcing. Worker VMs,
-the supporting runner/registry VM and applications remain planned.
+The first worker VM, lab-worker-01, is created with two CPUs and fixed 5 GB RAM.
+Next: attach the RHEL ISO and install the worker OS. These steps and cluster join
+are not yet confirmed. The second worker and supporting runner/registry VM remain planned.
+
 The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
 Windows restart was recommended but not explicitly confirmed in the evidence.
@@ -101,7 +101,8 @@ Executable manifests remain in this repository.
 - [Kubernetes node preparation and troubleshooting](https://github.com/Sabareh/data-platform-lab/wiki/05-kubernetes-node-preparation)
 - [GitHub Actions and local registry plan](https://github.com/Sabareh/data-platform-lab/wiki/06-ci-and-registry-plan)
 - [Control-plane bootstrap and Calico](https://github.com/Sabareh/data-platform-lab/wiki/07-control-plane-and-calico)
-- [Screenshot evidence index: 28 images](https://github.com/Sabareh/data-platform-lab/wiki/screenshots)
+- [First worker VM guide](https://sabareh.github.io/data-platform-lab/08-first-worker-vm/)
+- [Screenshot evidence index: 31 images](https://github.com/Sabareh/data-platform-lab/wiki/screenshots)
 - [Progress and evidence register](https://github.com/Sabareh/data-platform-lab/wiki/progress)
 
 The guides preserve commands from the build with explanations. Creation
@@ -139,3 +140,4 @@ VM disks, database backups, customer data or internal employer documents.
 
 This is an independent personal lab, not a production deployment or an
 official implementation of an employer's environment.
+

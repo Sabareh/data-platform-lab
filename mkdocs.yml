@@ -45,6 +45,7 @@ nav:
       - First boot and SSH: 04-rhel-first-boot.md
       - Kubernetes node preparation: 05-kubernetes-node-preparation.md
       - Control plane and Calico: 07-control-plane-and-calico.md
+      - First worker VM: 08-first-worker-vm.md
   - CI and registry plan: 06-ci-and-registry-plan.md
   - Progress: progress.md
   - Screenshots: screenshots.md
