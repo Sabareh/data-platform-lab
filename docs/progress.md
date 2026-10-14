@@ -8,6 +8,9 @@ screenshots are embedded in the installation and first-boot guides. They show
 only the personal lab; credentials, cookie-bearing HTTP output and unrelated
 personal storage-cleanup material are not included.
 
+The [screenshot index](screenshots.md) lists all 13 included images, their
+purposes and the reasons other supplied images were not published.
+
 | Milestone | Status | Evidence / limit |
 | --- | --- | --- |
 | Windows source repository | Verified | main branch, .gitignore and README committed and pushed |

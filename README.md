@@ -83,6 +83,7 @@ Windows restart was recommended but not explicitly confirmed in the evidence.
 - [Hyper-V network, concepts and troubleshooting](docs/02-hyperv-network.md)
 - [RHEL ISO verification and first VM preparation](docs/03-rhel-control-plane-vm.md)
 - [First boot, SSH and repository access, with screenshots](docs/04-rhel-first-boot.md)
+- [Screenshot evidence index: 13 images](docs/screenshots.md)
 - [Progress and evidence register](docs/progress.md)
 
 The guides preserve commands from the build with explanations. Creation

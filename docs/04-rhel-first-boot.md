@@ -17,6 +17,11 @@ Cockpit activation suggestion was not executed as part of this milestone.*
 Log in locally as `sabare` using the privately chosen password. Linux terminal
 password prompts do not echo characters or asterisks.
 
+![Successful local console login as sabare on lab-control-01](images/rhel-console-login.png)
+
+*Evidence: named-user console login works. This screen predates the SSH test
+and should not be used as proof of remote authentication.*
+
 ## 2. Verify administrator access and network settings
 
 Run in **RHEL**, one command at a time:
@@ -52,6 +57,11 @@ curl -I --connect-timeout 10 --max-time 30 https://www.redhat.com
 `getent` uses the configured name-resolution system. The observed IPv4
 response was `23.42.240.53`; it may differ on another run. Repeated STREAM,
 DGRAM and RAW entries are normal socket-type listings.
+
+![DNS lookup returning IPv4 records for www.redhat.com](images/rhel-dns-check.png)
+
+*Evidence: the corrected hostname lookup returns records. The preceding
+mistyped lookup produced no result; the successful command uses www.redhat.com.*
 
 `curl -I` retrieves headers rather than the page body, with bounded connection
 and total timeouts. It returned **HTTP/2 301**, redirecting to
@@ -117,6 +127,12 @@ sudo journalctl -u sshd --since "15 minutes ago" --no-pager -n 30
 This selects recent SSH service logs without entering a pager. The output
 showed `pam_unix` authentication failures and failed passwords for `sabare`;
 it did not establish a network failure or an explicit account lock.
+
+![SSH journal showing failed password authentication for the lab user](images/rhel-ssh-authentication-log.png)
+
+*Troubleshooting evidence: the guest received the Windows connection but
+rejected password authentication. These are local lab addresses and usernames;
+no password is printed. Later login success was reported by the user.*
 
 The user changed their own password in the console with:
 

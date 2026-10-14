@@ -125,6 +125,11 @@ or account-registration secrets are stored in this guide.
 
 ### Software, language and time
 
+![Initial installer summary before selecting the final software and account settings](images/rhel-initial-summary.png)
+
+*Starting state: Server with GUI, New York time zone and incomplete account
+settings. These are historical defaults, not the final lab configuration.*
+
 1. Select **Install Red Hat Enterprise Linux 9.8** in the boot menu.
 2. The resulting summary shows English (United States) language support and
    English (US) keyboard. Choose a different keyboard if needed for your hardware.
@@ -141,7 +146,18 @@ Application dashboards will later be accessed through the Windows browser.
 The time-zone setting controls local time display; it does not prove clock
 synchronisation. NTP/chrony verification remains pending.
 
+![Server selected with optional software groups left unchecked](images/rhel-server-selection.png)
+
+*Selection step: Server without a desktop. Container Management and the other
+optional add-ons were not needed for this initial OS installation.*
+
 ### Administrator account
+
+![Intermediate installation summary highlighting User Creation before account setup](images/rhel-account-setup-pending.png)
+
+*Intermediate step: software selection is saved, but no user will yet be
+created. The later final summary confirms administrator sabare. The root
+password-entry screenshot is omitted; no password screenshots are needed.*
 
 The user created `sabare`. The final summary explicitly states that
 administrator `sabare` will be created. Administrator membership permits
@@ -157,6 +173,11 @@ of Git, screenshots and command history.
 ### Static network settings
 
 Open **Network & Host Name**:
+
+![Initial Ethernet settings with interface off and hostname localhost](images/rhel-network-before-configuration.png)
+
+*Before configuration: the adapter is detected but switched off, with no
+address shown. This alone is not evidence of a Hyper-V network fault.*
 
 1. Enter `lab-control-01` in **Host Name** and click **Apply**.
 2. Select `Ethernet (eth0)` and click **Configure**.
@@ -178,6 +199,11 @@ The adapter initially remained off after saving. Turning it on resolved the
 disconnected state. The user reported address `192.168.200.10` and the DNS
 servers displayed; the final summary confirms `Connected: eth0`.
 
+![Hostname lab-control-01 applied while the Ethernet switch remains off](images/rhel-hostname-applied.png)
+
+*Intermediate step: hostname application succeeded, but the Ethernet toggle
+still needed to be turned on. This is not a screenshot of a working connection.*
+
 No successful DNS query, outbound HTTPS test or post-reboot persistence test
 has yet been recorded. The hostname does not automatically create a DNS
 record on Windows. Public DNS is a local lab choice, not a production setting.
@@ -188,6 +214,12 @@ Select the **40 GiB Microsoft virtual disk (`sda`)** under Installation
 Destination, choose **Automatic** storage configuration and click **Done**.
 The screenshot shows encryption unchecked. The final partition layout has
 not been inspected, so no specific LVM, filesystem or swap sizes are claimed.
+
+![Selected 40 GiB Microsoft virtual disk with Automatic partitioning](images/rhel-installation-disk.png)
+
+*Storage selection: sda is the VM's 40 GiB virtual disk. The displayed
+1.97 MiB free prompted further review; its meaning was not independently
+established. The subsequent summary accepted the configuration.*
 
 The disk page displayed only **1.97 MiB free**. That number was initially
 treated as evidence of existing partitions, but it alone did not establish
