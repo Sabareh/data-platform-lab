@@ -53,17 +53,33 @@ available because it has only one control-plane node.
 - OpenShift Local was cleaned up and uninstalled.
 - The remaining user .crc directory was deleted and its absence verified.
 - Hyper-V lists the Default Switch and WSL internal switches.
-- Get-NetNat returned no entries.
+- The dedicated internal switch `reservoir-lab-switch` was created successfully.
+- Its Windows gateway is `192.168.200.1/24`, verified as `Preferred`.
+- NAT `reservoir-lab-nat` covers `192.168.200.0/24` and reports `Active=True`.
+- RHEL 9.8 x86_64 DVD ISO was downloaded and its SHA-256 matched the published checksum.
+- VM `lab-control-01` was created with a 40 GB expanding disk, 3 GB startup RAM and 2 virtual CPUs.
+- Linux-compatible Secure Boot was configured, the ISO attached and DVD boot selected.
+- The RHEL installer boot menu was reached.
 
-## Current blocker
+## Current step
 
-Creating reservoir-lab-switch failed with error 0x800700B7:
-"Cannot create a file when that file already exists."
+RHEL installation is in progress. Installation completion, guest networking,
+registration, SSH access and Kubernetes installation are not yet verified.
 
-The cause is not yet established. The next infrastructure step is to inspect
-existing Hyper-V switches and virtual adapters before retrying creation.
+The earlier switch-creation error `0x800700B7` no longer blocks progress:
+a later retry succeeded. Its underlying cause was not established, and a
+Windows restart was recommended but not explicitly confirmed in the evidence.
 
-No new Kubernetes VMs or cluster have been created for this rebuild.
+## Step-by-step guides
+
+- [Windows Git and GitHub foundation](docs/01-repository-foundation.md)
+- [Hyper-V network, concepts and troubleshooting](docs/02-hyperv-network.md)
+- [RHEL ISO verification and first VM preparation](docs/03-rhel-control-plane-vm.md)
+- [Progress and evidence register](docs/progress.md)
+
+The guides preserve commands from the build with explanations. Creation
+commands are historical instructions, not scripts to rerun blindly on an
+existing environment. Verification commands are identified separately.
 
 ## Documentation approach
 

@@ -1,0 +1,139 @@
+# RHEL installation media and first VM
+
+## Decision and limits
+
+RHEL was selected to practise the operating-system tools used in the reference
+environment. The reference environment's exact major/minor version is unknown.
+RHEL 9.8 is a lab choice, not a confirmed production match.
+
+Use a personal Red Hat Developer Subscription for Individuals, subject to its
+current terms. Red Hat describes it as no-cost, self-supported access for up
+to 16 physical or virtual systems. This does not establish support coverage
+for the planned upstream Kubernetes installation.
+
+## Capacity checks
+
+Run in Windows PowerShell:
+
+```powershell
+Get-CimInstance Win32_OperatingSystem | Select-Object @{Name='TotalRAM_GB';Expression={[math]::Round($_.TotalVisibleMemorySize / 1MB, 1)}}, @{Name='FreeRAM_GB';Expression={[math]::Round($_.FreePhysicalMemory / 1MB, 1)}}
+Get-Volume -DriveLetter C | Select-Object DriveLetter, @{Name='SizeGB';Expression={[math]::Round($_.Size / 1GB, 1)}}, @{Name='FreeGB';Expression={[math]::Round($_.SizeRemaining / 1GB, 1)}}
+```
+
+Observed before downloading/installing:
+
+| Measurement | Value |
+| --- | --- |
+| Total usable RAM | 31.7 |
+| Available RAM at the time | 18.7 |
+| C: capacity | 476 |
+| C: free space at the time | 198.9 |
+
+The command labels say GB; these PowerShell conversions use binary units
+(GiB). Windows reports the memory fields in KiB, hence dividing by `1MB`
+(1,048,576) converts those values to GiB. These are historical measurements,
+not reservations or a guarantee of current free capacity.
+
+## Keep VM files outside Git
+
+```powershell
+New-Item -ItemType Directory -Path "$env:USERPROFILE\HyperV\data-platform-lab" -Force
+```
+
+Source lives under `Documents\AI Engineering\data-platform-lab`; virtual
+disks live under `HyperV\data-platform-lab`. ISOs remain in Downloads.
+
+## Obtain and verify the ISO
+
+Download the **RHEL 9.8 x86_64 DVD ISO** from the official Red Hat page after
+signing in. `x86_64` matches this Intel laptop. The DVD ISO supplies local
+installation packages; boot-only media depends more on a network source.
+
+IDM initially captured `auth.htm` pages rather than the ISO. This suggested
+an authentication redirect problem, but the exact cause was not verified.
+The final ISO was subsequently downloaded successfully. Do not save signed
+download URLs, account tokens or authentication pages in this repository.
+
+Locate and hash the downloaded file:
+
+```powershell
+Get-ChildItem -LiteralPath "$env:USERPROFILE\Downloads" -Filter '*rhel*.iso' -File -Recurse | Select-Object FullName, @{Name='SizeGB';Expression={[math]::Round($_.Length / 1GB, 2)}}
+Get-FileHash -LiteralPath "$env:USERPROFILE\Downloads\rhel-9.8-x86_64-dvd.iso" -Algorithm SHA256 | Format-List
+```
+
+Verified filename: `rhel-9.8-x86_64-dvd.iso`, approximately 14.47 GiB.
+
+The observed SHA-256 matches the value published on Red Hat's download page:
+
+```text
+c0dd53b73406b85b40d6168d1748e605d71361b2992d282c408b7d7d2e1d2c80
+```
+
+Uppercase/lowercase does not change a hexadecimal hash. Compare the checksum
+for the exact version, architecture and image type; another ISO has another
+expected hash. This is an integrity comparison against the vendor's HTTPS
+page, not a separately performed signature verification.
+
+## Create the VM
+
+Run in **Administrator PowerShell**. These creation commands have already
+been executed in this lab. Do not rerun them blindly.
+
+```powershell
+New-VM -Name "lab-control-01" -Generation 2 -MemoryStartupBytes 3GB -NewVHDPath "$env:USERPROFILE\HyperV\data-platform-lab\lab-control-01\os.vhdx" -NewVHDSizeBytes 40GB -Path "$env:USERPROFILE\HyperV\data-platform-lab" -SwitchName "reservoir-lab-switch"
+```
+
+- Generation 2 provides UEFI virtual firmware.
+- 3 GB is the initial startup memory allocation.
+- `NewVHDSizeBytes` gives the expanding virtual disk a maximum logical size
+  of 40 GB. Its host file grows as data is written; it does not immediately
+  reserve all 40 GB of physical disk capacity.
+- `SwitchName` connects the VM to the prepared private network.
+- `New-VM` creates the machine but does not start it or install Linux.
+
+## Configure CPU and Secure Boot while the VM is off
+
+```powershell
+Set-VMProcessor -VMName "lab-control-01" -Count 2
+Set-VMFirmware -VMName "lab-control-01" -EnableSecureBoot On -SecureBootTemplate MicrosoftUEFICertificateAuthority
+```
+
+Two virtual processors share the host's physical CPU resources. The firmware
+template permits supported Linux bootloaders while keeping Secure Boot enabled.
+
+## Attach media and select DVD boot
+
+```powershell
+Add-VMDvdDrive -VMName "lab-control-01" -Path "$env:USERPROFILE\Downloads\rhel-9.8-x86_64-dvd.iso"
+Set-VMFirmware -VMName "lab-control-01" -FirstBootDevice (Get-VMDvdDrive -VMName "lab-control-01")
+vmconnect.exe localhost "lab-control-01"
+```
+
+`Add-VMDvdDrive` inserts the ISO as a virtual DVD. `FirstBootDevice` chooses
+that DVD before the empty virtual disk. `vmconnect.exe` opens the machine's
+console on this host. Click **Start** and press a key if prompted to boot DVD.
+
+The user confirmed reaching the RHEL installer boot menu. The next instruction
+was to choose **Install Red Hat Enterprise Linux 9.8**. Selecting it starts
+the installer; it does not alone prove that Linux has been installed.
+
+## Pending installation work
+
+- Confirm the installer language screen and complete installation choices.
+- Configure hostname, local administrator account and guest networking.
+- Keep passwords out of scripts and public screenshots.
+- Choose a suitable minimal/server installation and virtual disk layout.
+- Complete installation, detach media or update boot order, then boot disk.
+- Verify OS version, network/DNS/HTTPS, registration and SSH access.
+- Review actual VM configuration and resource consumption.
+- Create workers later; no worker VMs or Kubernetes cluster are verified yet.
+
+The proposed 3 GB allocation may need adjustment if the installer or workloads
+require more memory. Do not disable SELinux or the firewall merely to bypass
+an unexplained installation/networking problem.
+
+## References
+
+- [RHEL downloads and checksums](https://developers.redhat.com/products/rhel/download)
+- [Developer Subscription for Individuals FAQ](https://developers.redhat.com/articles/faqs-no-cost-red-hat-enterprise-linux)
+- [Microsoft: Create a Hyper-V VM](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/create-a-virtual-machine-in-hyper-v)
