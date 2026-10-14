@@ -6,9 +6,7 @@ run in the RHEL SSH session as `sabare`, with `sudo` where required.
 
 ## Current outcome
 
-Kubernetes packages are installed, but the cluster has **not been initialised**.
-The latest screenshot confirms kubelet is enabled and CRI-O is active.
-Runtime communication through crictl is the next unverified step.
+This chapter records preparation through package installation. Subsequent runtime checks, successful cluster initialisation and operator readiness are documented in [control-plane and Calico preparation](07-control-plane-and-calico.md).
 
 ## 1. Update RHEL and inspect storage
 
@@ -136,7 +134,7 @@ timedatectl
 
 Verified: enabled, active, Leap status Normal, a selected `^*` time source and
 System clock synchronized: yes. Correct time helps certificate validation and
-correlating logs across nodes. SELinux and firewalld were not disabled.
+correlating logs across nodes. SELinux and firewalld were not disabled at this stage. Firewalld was later disabled during Calico preparation.
 
 ## 5. Prepare kernel modules and packet forwarding
 
@@ -269,11 +267,11 @@ systemctl is-active crio
 ![Installation complete, matching Kubernetes versions and service checks](images/kubernetes-packages-installed.png)
 
 Enabling kubelet schedules startup at boot; this is not evidence of a running
-control plane. No kubeadm init or worker join has been recorded.
+control plane. Subsequent kubeadm initialisation is recorded in the next guide; worker joins remain pending.
 
-## Next step: runtime communication (not yet verified)
+## Runtime communication (subsequently verified)
 
-These commands were proposed, but completion has not been supplied:
+These checks were subsequently completed; see [the evidence](07-control-plane-and-calico.md):
 
 ```bash
 sudo tee /etc/crictl.yaml > /dev/null <<'EOF'

@@ -8,7 +8,7 @@ screenshots are embedded in the installation and first-boot guides. They show
 only the personal lab; credentials, cookie-bearing HTTP output and unrelated
 personal storage-cleanup material are not included.
 
-The [screenshot index](screenshots.md) lists all 22 included images, their
+The [screenshot index](screenshots.md) lists all 28 included images, their
 purposes and the reasons other supplied images were not published.
 
 | Milestone | Status | Evidence / limit |
@@ -42,13 +42,16 @@ purposes and the reasons other supplied images were not published.
 | VM memory | Reported verified | Dynamic Memory disabled, startup 3072 MiB; guest about 2.6 GiB |
 | Swap | Verified after reboot | Swap 0B and zero active swap units |
 | Time sync | Verified | chronyd enabled/active, selected source and clock synchronised |
-| Security baseline | Verified at inspection | SELinux Enforcing, firewalld active, cgroup v2 |
+| Security baseline | Updated | SELinux Enforcing, cgroup v2; firewalld subsequently disabled for Calico, with backup |
 | Kernel network settings | Verified applied | overlay and br_netfilter loaded; three sysctl values 1; reboot persistence not yet retested |
-| CRI-O | Reported installed; active verified | 1.36.7 selected in transaction; post-install version output absent |
+| CRI-O | Verified | crictl reports runtime 1.36.7, CRI v1, RuntimeReady true |
 | Kubernetes packages | Verified | kubeadm/kubelet/kubectl 1.36.5; cri-tools 1.36.0; kubernetes-cni 1.9.1 |
 | Kubelet boot enablement | Verified | systemctl is-enabled returned enabled |
-| Runtime API checks | Pending | crictl configuration and diagnostics proposed, result not received |
-| Cluster creation | Planned | No kubeadm init, CNI deployment, worker join or application deployment yet |
+| Runtime API checks | Verified | RuntimeReady true; NetworkReady false before CNI |
+| Cluster creation | Verified initialisation | Control-plane Pods Running; node NotReady and CoreDNS Pending before CNI |
+| Calico host preparation | Verified | NetworkManager exclusions, VXLAN loaded, firewalld disabled/inactive |
+| Calico operator | Verified | 3.33.0 manifests; rollout succeeded and Pod 1/1 Running |
+| Calico networking | Prepared, not applied | VXLAN, BGP disabled, Pod CIDR 10.244.0.0/16; readiness pending |
 | GitHub runner and local registry | Planned | Selected co-location on supporting RHEL VM outside Kubernetes |
 | Data/AI services and MCP | Planned | No deployments in the rebuilt lab |
 
@@ -68,7 +71,7 @@ root cause must remain unknown rather than being presented as a proven fix.
 - Guest address 192.168.200.10/24 with gateway 192.168.200.1; public DNS for the home lab.
 - Root password set privately; root password SSH was instructed off and needs verification.
 - Disk layout verified: EFI, XFS boot, LVM root and swap; swap disabled without deleting its volume.
-- CRI-O 1.36 selected; Kubernetes 1.36.5 packages installed. CNI choice and compatibility remain pending.
+- CRI-O 1.36 selected; Kubernetes 1.36.5 packages installed. Calico 3.33.0 selected with VXLAN and BGP disabled.
 - Podman is intended for image workflows, not as the Kubernetes CRI runtime.
 - One control plane initially; high availability is not provided.
 - Add services incrementally within laptop capacity.
@@ -78,7 +81,6 @@ root cause must remain unknown rather than being presented as a proven fix.
 
 ## Next step
 
-Verify CRI-O communication through crictl, then review runtime settings, firewall,
-Pod/Service ranges and CNI compatibility before cluster creation.
-See [node preparation](05-kubernetes-node-preparation.md) and
-[the runner/registry plan](06-ci-and-registry-plan.md).
+Apply the prepared Calico Installation and verify node, network and CoreDNS
+readiness. See [control-plane and Calico steps](07-control-plane-and-calico.md).
+Worker joins and [the runner/registry plan](06-ci-and-registry-plan.md) remain pending.

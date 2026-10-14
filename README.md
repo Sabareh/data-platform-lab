@@ -71,15 +71,14 @@ available because it has only one control-plane node.
 
 RHEL is updated and running with fixed 3 GB VM RAM, swap disabled after reboot,
 time synchronisation working and kernel networking settings applied.
-CRI-O installation was reported successful; its active state is visible in the
-latest screenshot. Kubernetes tools kubeadm, kubelet and kubectl are installed
-at 1.36.5, and kubelet is enabled. Red Hat metadata refresh and update checking
-were reported successful after investigating the subscription warning.
+CRI-O 1.36.7 responds through CRI API v1. Kubernetes 1.36.5 initialised
+successfully and the Calico 3.33.0 operator is 1/1 Running. The node was
+NotReady and CoreDNS Pending before Pod-network configuration.
 
-The cluster has not been initialised. Next: verify CRI-O communication with
-crictl, then prepare firewall rules and cluster networking. Worker VMs,
-the supporting runner/registry VM and application deployments remain planned.
-
+Next: apply the prepared Calico VXLAN configuration with BGP disabled and
+Pod network 10.244.0.0/16, then verify readiness. Firewalld is now disabled
+following Calico preparation; SELinux remains Enforcing. Worker VMs,
+the supporting runner/registry VM and applications remain planned.
 The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
 Windows restart was recommended but not explicitly confirmed in the evidence.
@@ -92,7 +91,8 @@ Windows restart was recommended but not explicitly confirmed in the evidence.
 - [First boot, SSH and repository access, with screenshots](docs/04-rhel-first-boot.md)
 - [Kubernetes node preparation and troubleshooting](docs/05-kubernetes-node-preparation.md)
 - [GitHub Actions and local registry plan](docs/06-ci-and-registry-plan.md)
-- [Screenshot evidence index: 22 images](docs/screenshots.md)
+- [Control-plane bootstrap and Calico](docs/07-control-plane-and-calico.md)
+- [Screenshot evidence index: 28 images](docs/screenshots.md)
 - [Progress and evidence register](docs/progress.md)
 
 The guides preserve commands from the build with explanations. Creation

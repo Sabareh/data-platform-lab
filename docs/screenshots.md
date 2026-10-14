@@ -1,6 +1,6 @@
 # Screenshot evidence index
 
-Twenty-two screenshots from the current Hyper-V/RHEL rebuild are preserved
+Twenty-eight screenshots from the current Hyper-V/RHEL rebuild are preserved
 unchanged under `docs/images/` and embedded beside the relevant explanations.
 They include intermediate states and failures, not just successful outcomes.
 
@@ -64,3 +64,20 @@ The latest image also matches the attachment supplied with this documentation re
 
 Capture times identify source files, not the time every command on screen ran.
 No credentials, registration IDs or cookie-bearing output were found in these nine images.
+
+## Runtime, bootstrap and Calico operator
+
+Six further originals are embedded in [the control-plane guide](07-control-plane-and-calico.md).
+
+| Capture (2026-10-14, local time) | Screenshot | Evidence |
+| --- | --- | --- |
+| 14:30:14 | [Runtime ready](images/crio-runtime-ready.png) | RuntimeReady true; CNI absent |
+| 14:31:19 | [Runtime API](images/crio-api-and-node-network.png) | CRI-O 1.36.7, CRI v1, VM routes |
+| 14:53:45 | [Historical firewall rules](images/kubernetes-firewall-rules-historical.png) | Rules verified before firewalld disabled |
+| 14:55:56 | [Calico host preparation](images/calico-host-preparation.png) | NetworkManager exclusions, VXLAN, firewalld disabled, SELinux Enforcing |
+| 15:01:18 | [Images and preflight](images/kubeadm-images-and-preflight.png) | Download success and preflight warnings |
+| 15:36:24 | [Operator ready](images/calico-operator-ready.png) | Rollout succeeded, Pod 1/1 Running |
+
+The 15:12:54 bootstrap-success screenshot is excluded because it contains a join
+token. Only non-sensitive results are transcribed. No token revocation is claimed.
+Calico network readiness is not yet evidenced.
