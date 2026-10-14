@@ -478,6 +478,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-first-worker-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First worker VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -729,7 +757,7 @@ It is not an independent live audit of the Hyper-V host. Selected original
 screenshots are embedded in the installation and first-boot guides. They show
 only the personal lab; credentials, cookie-bearing HTTP output and unrelated
 personal storage-cleanup material are not included.</p>
-<p>The <a href="../screenshots/">screenshot index</a> lists all 28 included images, their
+<p>The <a href="../screenshots/">screenshot index</a> lists all 31 included images, their
 purposes and the reasons other supplied images were not published.</p>
 <table>
 <thead>
@@ -861,9 +889,9 @@ purposes and the reasons other supplied images were not published.</p>
 <td>Metadata refresh and update check succeeded, including after subscription warning</td>
 </tr>
 <tr>
-<td>Worker VMs</td>
-<td>Planned</td>
-<td>No creation evidence yet</td>
+<td>First worker VM</td>
+<td>Created and verified</td>
+<td>lab-worker-01 Off, Generation 2, two CPUs, fixed 5120 MiB, 40 GB disk, lab switch; OS installation pending</td>
 </tr>
 <tr>
 <td>RHEL update</td>
@@ -918,7 +946,7 @@ purposes and the reasons other supplied images were not published.</p>
 <tr>
 <td>Cluster creation</td>
 <td>Verified initialisation</td>
-<td>Control-plane Pods Running; node NotReady and CoreDNS Pending before CNI</td>
+<td>Control-plane Pods Running; initial NotReady/Pending resolved after CNI</td>
 </tr>
 <tr>
 <td>Calico host preparation</td>
@@ -932,8 +960,18 @@ purposes and the reasons other supplied images were not published.</p>
 </tr>
 <tr>
 <td>Calico networking</td>
-<td>Prepared, not applied</td>
-<td>VXLAN, BGP disabled, Pod CIDR 10.244.0.0/16; readiness pending</td>
+<td>Verified ready</td>
+<td>Node Ready; Calico Available True, Progressing False, Degraded False; VXLAN/BGP/CIDR configuration observed</td>
+</tr>
+<tr>
+<td>CoreDNS</td>
+<td>Verified</td>
+<td>Both Pods 1/1 Running, zero restarts, Pod addresses 10.244.242.3 and .4</td>
+</tr>
+<tr>
+<td>Pod DNS and cleanup</td>
+<td>Reported verified</td>
+<td>Internal and external lookups succeeded; temporary dns-check Pod deleted</td>
 </tr>
 <tr>
 <td>GitHub runner and local registry</td>
@@ -970,9 +1008,10 @@ root cause must remain unknown rather than being presented as a proven fix.</p>
 <li>Read-only MCP is deferred until Kubernetes is operational.</li>
 </ul>
 <h2 id="next-step">Next step<a class="headerlink" href="#next-step" title="Permanent link">&para;</a></h2>
-<p>Apply the prepared Calico Installation and verify node, network and CoreDNS
-readiness. See <a href="../07-control-plane-and-calico/">control-plane and Calico steps</a>.
-Worker joins and <a href="../06-ci-and-registry-plan/">the runner/registry plan</a> remain pending.</p>
+<p>Locate and attach the RHEL ISO to lab-worker-01, boot the installer and configure
+the worker. ISO attachment, OS installation and cluster join remain unconfirmed.
+See <a href="../08-first-worker-vm/">first worker VM</a>. Cross-node networking will be
+tested after a worker joins. The second worker and runner/registry VM remain planned.</p>
 
 
 

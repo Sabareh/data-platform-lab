@@ -476,6 +476,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-first-worker-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First worker VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -658,6 +686,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#network-recovery-and-worker-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network recovery and worker preparation
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -747,6 +786,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#network-recovery-and-worker-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network recovery and worker preparation
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -765,7 +815,7 @@
 
 
 <h1 id="screenshot-evidence-index">Screenshot evidence index<a class="headerlink" href="#screenshot-evidence-index" title="Permanent link">&para;</a></h1>
-<p>Twenty-eight screenshots from the current Hyper-V/RHEL rebuild are preserved
+<p>Thirty-one screenshots from the current Hyper-V/RHEL rebuild are preserved
 unchanged under <code>docs/images/</code> and embedded beside the relevant explanations.
 They include intermediate states and failures, not just successful outcomes.</p>
 <h2 id="installation-sequence">Installation sequence<a class="headerlink" href="#installation-sequence" title="Permanent link">&para;</a></h2>
@@ -963,7 +1013,32 @@ No credentials, registration IDs or cookie-bearing output were found in these ni
 </table>
 <p>The 15:12:54 bootstrap-success screenshot is excluded because it contains a join
 token. Only non-sensitive results are transcribed. No token revocation is claimed.
-Calico network readiness is not yet evidenced.</p>
+Calico network readiness is evidenced in the subsequent update below.</p>
+<h2 id="network-recovery-and-worker-preparation">Network recovery and worker preparation<a class="headerlink" href="#network-recovery-and-worker-preparation" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Screenshot</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../images/coredns-recovered.png">CoreDNS recovery</a></td>
+<td>Ready conditions True despite older scheduling and probe warnings</td>
+</tr>
+<tr>
+<td><a href="../images/calico-available.png">Calico available</a></td>
+<td>Available True, components ready; old startup events retained</td>
+</tr>
+<tr>
+<td><a href="../images/worker-host-capacity.png">Worker host capacity</a></td>
+<td>Capacity and switch checks before worker creation</td>
+</tr>
+</tbody>
+</table>
+<p>Worker creation/settings were supplied as text, not a screenshot. Pod DNS success
+and test-Pod deletion were user-reported. No installer-boot result was supplied.</p>
 
 
 

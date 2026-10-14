@@ -1,4 +1,4 @@
-# Prepared configuration; application and network readiness are not yet verified.
+# Applied configuration; control-plane network readiness and Pod DNS verified on 2026-10-14.
 apiVersion: operator.tigera.io/v1
 kind: Installation
 metadata:

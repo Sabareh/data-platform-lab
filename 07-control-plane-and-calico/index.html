@@ -16,7 +16,7 @@
         <link rel="prev" href="../05-kubernetes-node-preparation/">
       
       
-        <link rel="next" href="../06-ci-and-registry-plan/">
+        <link rel="next" href="../08-first-worker-vm/">
       
       
         
@@ -574,10 +574,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-batch-configure-vxlan-pending-execution" class="md-nav__link">
+  <a href="#configure-vxlan-subsequently-completed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Next batch: configure VXLAN (pending execution)
+        Configure VXLAN (subsequently completed)
       
     </span>
   </a>
@@ -595,10 +595,66 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#verification-update-networking-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification update: networking ready
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verification update: networking ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pod-dns-test-and-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pod DNS test and cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-first-worker-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First worker VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -774,10 +830,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-batch-configure-vxlan-pending-execution" class="md-nav__link">
+  <a href="#configure-vxlan-subsequently-completed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Next batch: configure VXLAN (pending execution)
+        Configure VXLAN (subsequently completed)
       
     </span>
   </a>
@@ -792,6 +848,34 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-update-networking-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification update: networking ready
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verification update: networking ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pod-dns-test-and-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pod DNS test and cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -820,8 +904,10 @@ commands are not instructions to recreate an existing cluster.</p>
 etcd, controller manager, scheduler and kube-proxy were Running. The node was
 NotReady and both CoreDNS Pods were Pending before the Pod network was installed.
 The Calico 3.33.0 operator subsequently reached 1/1 Running with no restarts.</p>
-<p>The VXLAN Installation manifest is prepared, <strong>not yet applied or verified</strong>.
-Worker joins, workload networking and application deployments remain pending.
+<p>Subsequent verification confirmed the node Ready, both CoreDNS Pods Running,
+and Calico Available with no degradation. The IP pool and internal/external
+Pod DNS lookups were reported correct. See the verification update below.
+Worker joins, cross-node connectivity and application deployments remain pending.
 The bootstrap-success screenshot contains a join token and is excluded from
 public evidence; the non-sensitive results above were transcribed instead.</p>
 <h2 id="runtime-and-address-verification">Runtime and address verification<a class="headerlink" href="#runtime-and-address-verification" title="Permanent link">&para;</a></h2>
@@ -943,7 +1029,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w">
 <p>The rollout succeeded, with 1/1 Running and normal image-pull/start events.
 Operator readiness alone does not establish Pod-network readiness.</p>
 <p><img alt="Calico operator ready" src="../images/calico-operator-ready.png" /></p>
-<h2 id="next-batch-configure-vxlan-pending-execution">Next batch: configure VXLAN (pending execution)<a class="headerlink" href="#next-batch-configure-vxlan-pending-execution" title="Permanent link">&para;</a></h2>
+<h2 id="configure-vxlan-subsequently-completed">Configure VXLAN (subsequently completed)<a class="headerlink" href="#configure-vxlan-subsequently-completed" title="Permanent link">&para;</a></h2>
 <p>Copy the contents of <a href="../downloads/calico-installation.yaml">the prepared Installation manifest</a>
 to <code>~/cluster-bootstrap/calico/calico-installation.yaml</code> in the VM.</p>
 <ul>
@@ -973,7 +1059,7 @@ sudo<span class="w"> </span>crictl<span class="w"> </span>info
 </code></pre></div>
 <p>A timeout calls for inspecting events and operator status, not rerunning kubeadm
 init. Node Ready, RuntimeReady/NetworkReady true and healthy system Pods are
-targets, not results already observed. Cross-node connectivity requires workers
+targets that were subsequently met, as recorded below. Cross-node connectivity requires workers
 and later tests. Optional observability components are deferred.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
@@ -982,6 +1068,42 @@ and later tests. Optional observability components are deferred.</p>
 <li><a href="https://docs.tigera.io/calico/latest/reference/installation/api">Installation API</a></li>
 <li><a href="https://docs.tigera.io/calico/latest/operations/troubleshoot/troubleshooting#configure-networkmanager">NetworkManager preparation</a></li>
 </ul>
+<h2 id="verification-update-networking-ready">Verification update: networking ready<a class="headerlink" href="#verification-update-networking-ready" title="Permanent link">&para;</a></h2>
+<p>Fresh terminal output showed lab-control-01 Ready, Kubernetes v1.36.5 and CRI-O
+1.36.7. Both CoreDNS Pods were 1/1 Running with zero restarts, at 10.244.242.3 and
+10.244.242.4. Calico reported Available True, Progressing False, Degraded False;
+IP pools and tiers also reported all objects available.</p>
+<p>Earlier FailedScheduling and connection-refused probe events were historical.
+The later Ready conditions and available components demonstrate recovery; no
+restart was required. Image downloads took time during startup.</p>
+<p><img alt="CoreDNS recovered; old events remain visible" src="../images/coredns-recovered.png" />
+<img alt="Calico available and components ready" src="../images/calico-available.png" /></p>
+<p>The Installation resource confirms BGP Disabled, VXLAN encapsulation, Pod CIDR
+10.244.0.0/16, outgoing NAT Enabled and the Iptables dataplane.</p>
+<p>The original inspection command used the legacy <code>ippools.crd.projectcalico.org</code>
+resource and failed. This installation uses native v3 resources. Correct commands:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>api-resources<span class="w"> </span>--api-group<span class="o">=</span>projectcalico.org
+kubectl<span class="w"> </span>get<span class="w"> </span>ippools.projectcalico.org<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-o<span class="w"> </span>custom-columns<span class="o">=</span><span class="s1">'NAME:.metadata.name,CIDR:.spec.cidr,VXLAN:.spec.vxlanMode,IPIP:.spec.ipipMode,NAT:.spec.natOutgoing'</span>
+</code></pre></div>
+<p>The user reported the resulting pool was correct. The API-name error was not a
+network failure. See <a href="https://docs.tigera.io/calico/latest/operations/native-v3-crds">Calico native v3 CRDs</a>.</p>
+<h3 id="pod-dns-test-and-cleanup">Pod DNS test and cleanup<a class="headerlink" href="#pod-dns-test-and-cleanup" title="Permanent link">&para;</a></h3>
+<p>A temporary BusyBox 1.37.0 Pod named dns-check in default used a control-plane
+NoSchedule toleration, without changing the node taint. Service-account token
+mounting was disabled; resource requests were 10m CPU/16Mi RAM and limits
+100m CPU/64Mi RAM. It ran sleep 3600 to allow these checks:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>dns-check<span class="w"> </span>--<span class="w"> </span>cat<span class="w"> </span>/etc/resolv.conf
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>dns-check<span class="w"> </span>--<span class="w"> </span>nslookup<span class="w"> </span>kubernetes.default.svc.cluster.local
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>dns-check<span class="w"> </span>--<span class="w"> </span>nslookup<span class="w"> </span>www.redhat.com
+kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>dns-check<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>--ignore-not-found<span class="o">=</span><span class="nb">true</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>dns-check<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>--ignore-not-found<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<p>Both internal and external DNS lookups succeeded, and deletion was confirmed
+by the user. Full lookup answers were not supplied, so no specific resolved
+addresses are claimed. These checks verify single-node Pod DNS, not cross-node
+VXLAN traffic or network-policy enforcement.</p>
+<p>Next: <a href="../08-first-worker-vm/">create and install the first worker</a>.</p>
 
 
 
@@ -1034,13 +1156,13 @@ and later tests. Optional observability components are deferred.</p>
         
         
           
-          <a href="../06-ci-and-registry-plan/" class="md-footer__link md-footer__link--next" aria-label="Next: CI and registry plan">
+          <a href="../08-first-worker-vm/" class="md-footer__link md-footer__link--next" aria-label="Next: First worker VM">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                CI and registry plan
+                First worker VM
               </div>
             </div>
             <div class="md-footer__button md-icon">
