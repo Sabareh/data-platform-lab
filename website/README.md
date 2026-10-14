@@ -1,7 +1,7 @@
 # Documentation publishing
 
 Readers use https://sabareh.github.io/data-platform-lab/.
-The Wiki remains the source for the nine guides and screenshots; `website/index.md`
+The Wiki remains the source for the guides and screenshots; `website/index.md`
 defines the standalone homepage. Do not edit generated `.site-docs/` or `site/`.
 
 ## Current publishing mode
