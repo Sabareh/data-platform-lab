@@ -506,6 +506,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-second-worker-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Second worker and tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -607,6 +635,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#second-worker-and-reboot-recovery-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second worker and reboot recovery - 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resolved-symptom-unknown-cause" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -701,6 +740,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#second-worker-and-reboot-recovery-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second worker and reboot recovery - 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resolved-symptom-unknown-cause" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -757,7 +807,7 @@ It is not an independent live audit of the Hyper-V host. Selected original
 screenshots are embedded in the installation and first-boot guides. They show
 only the personal lab; credentials, cookie-bearing HTTP output and unrelated
 personal storage-cleanup material are not included.</p>
-<p>The <a href="../screenshots/">screenshot index</a> lists all 39 included images, their
+<p>The <a href="../screenshots/">screenshot index</a> lists all 51 included images, their
 purposes and the reasons other supplied images were not published.</p>
 <table>
 <thead>
@@ -1035,6 +1085,68 @@ purposes and the reasons other supplied images were not published.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="second-worker-and-reboot-recovery-2026-10-15">Second worker and reboot recovery - 2026-10-15<a class="headerlink" href="#second-worker-and-reboot-recovery-2026-10-15" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Status</th>
+<th>Evidence / limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Existing two-node reboot recovery</td>
+<td>Verified</td>
+<td>Both Ready; Calico available; worker 01 services enabled/active and swap off</td>
+</tr>
+<tr>
+<td>Worker 02 VM and RHEL</td>
+<td>Verified</td>
+<td>Gen 2, 2 CPUs, fixed 5120 MiB, 40 GB disk; installed RHEL 9.8 boot</td>
+</tr>
+<tr>
+<td>Worker 02 network repair</td>
+<td>Verified</td>
+<td>Named profile, 192.168.200.12/24 and gateway .1; retained after reboot</td>
+</tr>
+<tr>
+<td>Worker 02 registration and update</td>
+<td>Verified</td>
+<td>Registration and cache completed privately; DNF Complete and updated running kernel captured</td>
+</tr>
+<tr>
+<td>Worker 02 swap and networking</td>
+<td>Verified after reboot</td>
+<td>Swap 0B; three modules loaded and sysctls 1; SELinux Enforcing, cgroup v2</td>
+</tr>
+<tr>
+<td>Worker 02 join and readiness</td>
+<td>Verified</td>
+<td>Three Ready nodes; kubelet/CRI-O enabled/active; runtime and network ready</td>
+</tr>
+<tr>
+<td>Worker-to-worker HTTP</td>
+<td>User-confirmed</td>
+<td>Both direct Pod-IP directions passed</td>
+</tr>
+<tr>
+<td>Worker DNS and Service</td>
+<td>Verified / reported</td>
+<td>Both-node DNS user-confirmed; worker 02 DNS and uniquely selected Service endpoint/response visible</td>
+</tr>
+<tr>
+<td>Test cleanup</td>
+<td>User-confirmed</td>
+<td>worker-network-check deleted; all three nodes remain Ready</td>
+</tr>
+<tr>
+<td>Worker 02 post-join reboot</td>
+<td>Pending</td>
+<td>Earlier prerequisite reboot is verified, but not a reboot after joining</td>
+</tr>
+</tbody>
+</table>
 <h2 id="resolved-symptom-unknown-cause">Resolved symptom, unknown cause<a class="headerlink" href="#resolved-symptom-unknown-cause" title="Permanent link">&para;</a></h2>
 <p>Switch creation initially failed with <code>0x800700B7</code>. Read-only switch, adapter
 and Plug and Play inspections did not identify a conflicting lab device.
@@ -1058,10 +1170,9 @@ root cause must remain unknown rather than being presented as a proven fix.</p>
 <li>Read-only MCP is deferred until Kubernetes is operational.</li>
 </ul>
 <h2 id="next-step">Next step<a class="headerlink" href="#next-step" title="Permanent link">&para;</a></h2>
-<p>Confirm worker kubelet boot enablement (the join warned it was disabled) and
-post-join reboot recovery. Cross-node HTTP, DNS and Service tests have passed;
-the test namespace is deleted. The second worker and runner/registry VM remain
-planned. See <a href="../08-first-worker-vm/">first worker VM</a>.</p>
+<p>Verify worker 02 post-join reboot recovery. The three-node cluster and worker
+networking tests are complete; the GitHub runner/local registry VM remains
+planned. See <a href="../09-second-worker-vm/">second worker</a>.</p>
 
 
 

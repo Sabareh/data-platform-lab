@@ -504,6 +504,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-second-worker-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Second worker and tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -719,6 +747,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reboot-recovery-and-second-worker-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reboot recovery and second worker - 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -841,6 +880,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reboot-recovery-and-second-worker-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reboot recovery and second worker - 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -859,7 +909,7 @@
 
 
 <h1 id="screenshot-evidence-index">Screenshot evidence index<a class="headerlink" href="#screenshot-evidence-index" title="Permanent link">&para;</a></h1>
-<p>Thirty-nine screenshots from the current Hyper-V/RHEL rebuild are preserved
+<p>Fifty-one screenshots from the current Hyper-V/RHEL rebuild are preserved
 unchanged under the Wiki's <code>images/</code> directory and embedded beside the relevant explanations.
 They include intermediate states and failures, not just successful outcomes.</p>
 <h2 id="installation-sequence">Installation sequence<a class="headerlink" href="#installation-sequence" title="Permanent link">&para;</a></h2>
@@ -1142,6 +1192,67 @@ and system identifiers; their outcomes are documented in text instead. Package u
 </tbody>
 </table>
 <p>Join-command and join-success screenshots containing bootstrap tokens are excluded. No token revocation is claimed. Final node readiness and successful post-reboot swap checks are user-reported; they are not invented screenshot evidence.</p>
+<h2 id="reboot-recovery-and-second-worker-2026-10-15">Reboot recovery and second worker - 2026-10-15<a class="headerlink" href="#reboot-recovery-and-second-worker-2026-10-15" title="Permanent link">&para;</a></h2>
+<p>Twelve additional original screenshots, unchanged, accompany the <a href="../09-second-worker-vm/">second-worker guide</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Screenshot</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../images/cluster-reboot-recovery.png">Two-node reboot recovery</a></td>
+<td>Both nodes Ready and Calico available after laptop shutdown</td>
+</tr>
+<tr>
+<td><a href="../images/worker1-reboot-services.png">Worker 01 boot services</a></td>
+<td>kubelet, CRI-O and chrony enabled/active, no swap and VXLAN route</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-vm-configuration.png">Worker 02 VM configuration</a></td>
+<td>Generation 2, two CPUs, fixed 5120 MiB, switch and ISO</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-first-boot.png">Worker 02 first boot</a></td>
+<td>RHEL 9.8, hostname, RAM, 40 GB disk and sudo; initial Ethernet address absent</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-inactive-network.png">Inactive worker network</a></td>
+<td>No address or routes; only loopback active; profile lookup failed</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-network-repaired.png">Worker network repaired</a></td>
+<td>Corrected profile activates at 192.168.200.12 with default route</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-upgrade-complete.png">Worker upgrade complete</a></td>
+<td>DNF Complete and kernel 5.14.0-687.58.1 installed</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-post-upgrade-reboot.png">Worker post-upgrade checks</a></td>
+<td>Updated kernel running, network retained and clock synchronised; swap still active historically</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-swap-and-network-setup.png">Swap and network preparation</a></td>
+<td>fstab validation passed; modules, sysctls and NetworkManager exclusions configured</td>
+</tr>
+<tr>
+<td><a href="../images/worker2-prerequisites-after-reboot.png">Prerequisites after reboot</a></td>
+<td>Swap 0B, modules present, sysctls 1, SELinux Enforcing and cgroup v2; firewalld active before later setup</td>
+</tr>
+<tr>
+<td><a href="../images/three-node-cluster-ready.png">Three-node cluster ready</a></td>
+<td>Worker 02 transitions to Ready; Calico available; runtime and network ready, services enabled/active</td>
+</tr>
+<tr>
+<td><a href="../images/worker-to-worker-dns-service.png">Worker-to-worker DNS and Service</a></td>
+<td>DNS answers, worker-02-only endpoint 10.244.18.66 and HTTP response net-lab-worker-02</td>
+</tr>
+</tbody>
+</table>
+<p>Worker 02 registration identifiers, HTTP cookies and token-bearing join captures are excluded. Later captures show join results without the token-bearing command. Test cleanup is user-confirmed rather than visible in the final capture.</p>
 
 
 
