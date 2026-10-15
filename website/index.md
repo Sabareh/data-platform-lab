@@ -31,7 +31,7 @@ explanations and screenshots from the actual setup.
 ## Evidence, not just instructions
 
 The [progress register](progress.md) separates verified outcomes from planned work.
-The [screenshot index](screenshots.md) contains 31 reviewed captures, including
+The [screenshot index](screenshots.md) contains 33 reviewed captures, including
 intermediate failures and their resolution. Commands describe a guided build;
 read their context before rerunning them on an existing system.
 
