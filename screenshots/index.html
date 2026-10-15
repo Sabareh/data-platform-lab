@@ -708,6 +708,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#worker-preparation-and-cross-node-tests-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker preparation and cross-node tests - 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -819,6 +830,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#worker-preparation-and-cross-node-tests-2026-10-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker preparation and cross-node tests - 2026-10-15
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -837,8 +859,8 @@
 
 
 <h1 id="screenshot-evidence-index">Screenshot evidence index<a class="headerlink" href="#screenshot-evidence-index" title="Permanent link">&para;</a></h1>
-<p>Thirty-three screenshots from the current Hyper-V/RHEL rebuild are preserved
-unchanged under <code>docs/images/</code> and embedded beside the relevant explanations.
+<p>Thirty-nine screenshots from the current Hyper-V/RHEL rebuild are preserved
+unchanged under the Wiki's <code>images/</code> directory and embedded beside the relevant explanations.
 They include intermediate states and failures, not just successful outcomes.</p>
 <h2 id="installation-sequence">Installation sequence<a class="headerlink" href="#installation-sequence" title="Permanent link">&para;</a></h2>
 <p>See <a href="../03-rhel-control-plane-vm/">RHEL VM and installer guide</a>.</p>
@@ -1082,8 +1104,44 @@ and test-Pod deletion were user-reported. Installer boot and installation were c
 </table>
 <p>These two supplied originals were reviewed and preserved unchanged. The later
 HTTPS screenshot contains cookies, and registration screenshots contain account
-and system identifiers; their outcomes are documented in text instead. Package
-update completion and post-update reboot have not yet been evidenced.</p>
+and system identifiers; their outcomes are documented in text instead. Package update completion and post-update reboot were confirmed in the subsequent update below.</p>
+<h2 id="worker-preparation-and-cross-node-tests-2026-10-15">Worker preparation and cross-node tests - 2026-10-15<a class="headerlink" href="#worker-preparation-and-cross-node-tests-2026-10-15" title="Permanent link">&para;</a></h2>
+<p>See <a href="../08-first-worker-vm/">the worker guide</a>. Six further original screenshots are preserved unchanged.</p>
+<table>
+<thead>
+<tr>
+<th>Screenshot</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../images/worker-upgrade-complete.png">Worker upgrade complete</a></td>
+<td>DNF Complete and newly installed kernel 5.14.0-687.58.1.el9_8.x86_64</td>
+</tr>
+<tr>
+<td><a href="../images/worker-kernel-networking.png">Worker kernel networking</a></td>
+<td>Modules loaded, forwarding enabled, Ethernet route, SELinux Enforcing and cgroup v2; firewalld still active at this historical point</td>
+</tr>
+<tr>
+<td><a href="../images/worker-crio-started.png">Worker CRI-O started</a></td>
+<td>Service startup completed; a truncated warning is not interpreted as a verified diagnosis</td>
+</tr>
+<tr>
+<td><a href="../images/worker-runtime-ready.png">Worker runtime ready</a></td>
+<td>RuntimeReady true and NetworkReady false before joining and Calico setup</td>
+</tr>
+<tr>
+<td><a href="../images/worker-dns-and-service.png">Worker DNS and initial Service test</a></td>
+<td>Internal and external worker DNS succeed; initial Service selector was subsequently corrected</td>
+</tr>
+<tr>
+<td><a href="../images/cross-node-network-tests.png">Cross-node networking and cleanup</a></td>
+<td>Worker-only EndpointSlice, HTTP in both directions, Service DNS request and namespace deletion</td>
+</tr>
+</tbody>
+</table>
+<p>Join-command and join-success screenshots containing bootstrap tokens are excluded. No token revocation is claimed. Final node readiness and successful post-reboot swap checks are user-reported; they are not invented screenshot evidence.</p>
 
 
 

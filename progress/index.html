@@ -757,7 +757,7 @@ It is not an independent live audit of the Hyper-V host. Selected original
 screenshots are embedded in the installation and first-boot guides. They show
 only the personal lab; credentials, cookie-bearing HTTP output and unrelated
 personal storage-cleanup material are not included.</p>
-<p>The <a href="../screenshots/">screenshot index</a> lists all 33 included images, their
+<p>The <a href="../screenshots/">screenshot index</a> lists all 39 included images, their
 purposes and the reasons other supplied images were not published.</p>
 <table>
 <thead>
@@ -981,7 +981,7 @@ purposes and the reasons other supplied images were not published.</p>
 <tr>
 <td>Worker networking</td>
 <td>Verified repaired</td>
-<td>Dedicated lab-worker-eth0 profile active, gateway reachable, DNS and HTTPS successful; reboot persistence pending</td>
+<td>Dedicated lab-worker-eth0 profile active, gateway reachable, DNS and HTTPS successful; reboot persistence user-confirmed</td>
 </tr>
 <tr>
 <td>Worker time sync</td>
@@ -995,8 +995,38 @@ purposes and the reasons other supplied images were not published.</p>
 </tr>
 <tr>
 <td>Worker OS update</td>
-<td>In progress, user-reported</td>
-<td>DNF completion and new running kernel not yet verified</td>
+<td>Completed</td>
+<td>DNF Complete; kernel 5.14.0-687.58.1 installed; reboot checks user-confirmed</td>
+</tr>
+<tr>
+<td>Worker swap</td>
+<td>Reported verified after reboot</td>
+<td>Swap stayed off</td>
+</tr>
+<tr>
+<td>Worker modules and runtime</td>
+<td>Verified</td>
+<td>overlay, br_netfilter, vxlan; sysctls 1; CRI-O startup and RuntimeReady true</td>
+</tr>
+<tr>
+<td>Worker cluster join</td>
+<td>Verified in private screenshot</td>
+<td>Join succeeded; token-bearing capture excluded; both nodes Ready user-reported</td>
+</tr>
+<tr>
+<td>Cross-node Pod HTTP</td>
+<td>Verified in screenshot</td>
+<td>Both directions returned the destination Pod hostname</td>
+</tr>
+<tr>
+<td>Cross-node Service and DNS</td>
+<td>Verified / reported</td>
+<td>Worker DNS visible; both-node DNS user-confirmed; corrected worker-only EndpointSlice and Service HTTP verified</td>
+</tr>
+<tr>
+<td>Network test cleanup</td>
+<td>Verified</td>
+<td>network-check namespace deleted; final two-node Ready state user-reported</td>
 </tr>
 <tr>
 <td>Data/AI services and MCP</td>
@@ -1028,10 +1058,10 @@ root cause must remain unknown rather than being presented as a proven fix.</p>
 <li>Read-only MCP is deferred until Kubernetes is operational.</li>
 </ul>
 <h2 id="next-step">Next step<a class="headerlink" href="#next-step" title="Permanent link">&para;</a></h2>
-<p>Finish the worker package update, reboot and verify its kernel and network
-persistence. Then prepare swap, kernel networking, CRI-O and Kubernetes tools
-before joining the cluster. See <a href="../08-first-worker-vm/">first worker VM</a>.
-Cross-node networking remains untested; the second worker and runner/registry VM remain planned.</p>
+<p>Confirm worker kubelet boot enablement (the join warned it was disabled) and
+post-join reboot recovery. Cross-node HTTP, DNS and Service tests have passed;
+the test namespace is deleted. The second worker and runner/registry VM remain
+planned. See <a href="../08-first-worker-vm/">first worker VM</a>.</p>
 
 
 

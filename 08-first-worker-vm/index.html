@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#first-worker-vm-creation-and-installation-preparation" class="md-skip">
+        <a href="#first-worker-rhel-setup-kubernetes-join-and-network-verification" class="md-skip">
           Skip to content
         </a>
       
@@ -613,10 +613,137 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#package-update-in-progress" class="md-nav__link">
+  <a href="#package-update-and-reboot-completed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Package update (in progress)
+        Package update and reboot (completed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-preparation-and-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker preparation and runtime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-the-existing-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Join the existing cluster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-node-pod-dns-and-service-tests-passed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-node Pod, DNS and Service tests (passed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-setup-and-test-screenshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker setup and test screenshots
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worker setup and test screenshots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worker-upgrade-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker upgrade complete
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-kernel-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker kernel networking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-cri-o-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker CRI-O started
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-runtime-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker runtime ready
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-dns-and-initial-service-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker DNS and initial Service test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-node-networking-and-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-node networking and cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next steps
       
     </span>
   </a>
@@ -813,10 +940,137 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#package-update-in-progress" class="md-nav__link">
+  <a href="#package-update-and-reboot-completed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Package update (in progress)
+        Package update and reboot (completed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-preparation-and-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker preparation and runtime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-the-existing-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Join the existing cluster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-node-pod-dns-and-service-tests-passed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-node Pod, DNS and Service tests (passed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-setup-and-test-screenshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker setup and test screenshots
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worker setup and test screenshots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worker-upgrade-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker upgrade complete
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-kernel-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker kernel networking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-cri-o-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker CRI-O started
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-runtime-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker runtime ready
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-dns-and-initial-service-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker DNS and initial Service test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-node-networking-and-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-node networking and cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next steps
       
     </span>
   </a>
@@ -840,7 +1094,7 @@
 
 
 
-<h1 id="first-worker-vm-creation-and-installation-preparation">First worker VM: creation and installation preparation<a class="headerlink" href="#first-worker-vm-creation-and-installation-preparation" title="Permanent link">&para;</a></h1>
+<h1 id="first-worker-rhel-setup-kubernetes-join-and-network-verification">First worker: RHEL setup, Kubernetes join and network verification<a class="headerlink" href="#first-worker-rhel-setup-kubernetes-join-and-network-verification" title="Permanent link">&para;</a></h1>
 <p>Created 2026-10-14; updated 2026-10-15 (Africa/Nairobi). Commands run in Windows PowerShell as Administrator unless
 labelled RHEL. VM creation below is historical: do not rerun it against the
 existing worker.</p>
@@ -853,8 +1107,10 @@ expanding disk is <code>C:\Users\USER\HyperV\data-platform-lab\lab-worker-01\os.
 The creation and configuration results were supplied as terminal text.</p>
 <p>Installer completion and installed-system login are confirmed. The network was
 subsequently repaired, time synchronisation verified and registration completed.
-The package update is in progress; completion and post-update reboot are not yet
-verified. The worker has not joined Kubernetes. ISO ejection was instructed but
+The package upgrade completed and the user confirmed successful reboot checks.
+Swap stayed disabled after a further reboot. The worker joined Kubernetes, and
+both nodes are reported Ready. Cross-node HTTP, DNS and Service routing tests
+passed; the temporary test namespace was deleted. ISO ejection was instructed but
 not separately evidenced. This is a fresh installation, not a control-plane clone.</p>
 <h2 id="capacity-checks">Capacity checks<a class="headerlink" href="#capacity-checks" title="Permanent link">&para;</a></h2>
 <p>Before creation, the host reported 31.67 GiB total RAM, 15.2 GiB free RAM and
@@ -971,8 +1227,7 @@ curl<span class="w"> </span>-I<span class="w"> </span>--connect-timeout<span cla
 <p>The profile activated on eth0, the gateway replied, DNS resolved the hostname,
 and HTTPS returned HTTP/2 301. Earlier curl errors omitted the numeric argument
 after <code>--max-time</code>; the final command corrected that. The success screenshot
-contains HTTP cookies and is excluded from public images. Autoconnect is configured,
-but persistence after a further reboot has not yet been retested.</p>
+contains HTTP cookies and is excluded from public images. The user subsequently confirmed that networking survived the post-update reboot.</p>
 <h2 id="time-synchronisation-and-registration">Time synchronisation and registration<a class="headerlink" href="#time-synchronisation-and-registration" title="Permanent link">&para;</a></h2>
 <p>Chrony selected a time source, reported Leap status Normal, and timedatectl
 reported System clock synchronized yes with NTP active in Africa/Nairobi.
@@ -991,10 +1246,10 @@ sudo<span class="w"> </span>subscription-manager<span class="w"> </span>register
 reported invalid credentials; the second succeeded for lab-worker-01. The
 registration screenshots contain a system ID and account identifier and are not
 published. No passwords or registration IDs are recorded here.</p>
-<h2 id="package-update-in-progress">Package update (in progress)<a class="headerlink" href="#package-update-in-progress" title="Permanent link">&para;</a></h2>
-<p>These batches were provided after registration. The user subsequently reported
-that the worker was updating. Detailed repository and transaction completion
-output has not yet been supplied:</p>
+<h2 id="package-update-and-reboot-completed">Package update and reboot (completed)<a class="headerlink" href="#package-update-and-reboot-completed" title="Permanent link">&para;</a></h2>
+<p>These batches were run after registration. The supplied transaction screenshot
+shows Complete and installation of kernel 5.14.0-687.58.1.el9_8.x86_64. The user
+confirmed the reboot and subsequent checks succeeded:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>subscription-manager<span class="w"> </span>refresh
 sudo<span class="w"> </span>subscription-manager<span class="w"> </span>repos<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--enable<span class="o">=</span>rhel-9-for-x86_64-baseos-rpms<span class="w"> </span><span class="se">\</span>
@@ -1018,10 +1273,188 @@ free<span class="w"> </span>-h
 swapon<span class="w"> </span>--show
 timedatectl
 </code></pre></div>
-<p>Next: verify the updated kernel and persistent networking, disable swap
-persistently, prepare kernel networking and install the compatible Kubernetes
-runtime and tools. None of those worker preparation steps or cluster join is
-claimed complete yet.</p>
+<h2 id="worker-preparation-and-runtime">Worker preparation and runtime<a class="headerlink" href="#worker-preparation-and-runtime" title="Permanent link">&para;</a></h2>
+<p>Swap was disabled with <code>sudo swapoff -a</code>, the swap entry in <code>/etc/fstab</code> was
+commented after a dated backup, and <code>sudo findmnt --verify --verbose</code> checked
+the file. <code>sudo systemctl daemon-reload</code> refreshed generated units. The user
+confirmed swap remained off after reboot. Its LVM volume was not deleted.</p>
+<p>The worker then received the same kernel and Calico host settings as the control
+plane. These are historical setup commands, not a request to repeat the install:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/modules-load.d/kubernetes.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">overlay</span>
+<span class="s">br_netfilter</span>
+<span class="s">vxlan</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>modprobe<span class="w"> </span>overlay
+sudo<span class="w"> </span>modprobe<span class="w"> </span>br_netfilter
+sudo<span class="w"> </span>modprobe<span class="w"> </span>vxlan
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/99-kubernetes.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">net.ipv4.ip_forward = 1</span>
+<span class="s">net.bridge.bridge-nf-call-iptables = 1</span>
+<span class="s">net.bridge.bridge-nf-call-ip6tables = 1</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>sysctl<span class="w"> </span>--load<span class="o">=</span>/etc/sysctl.d/99-kubernetes.conf
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/NetworkManager/conf.d/calico.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">[keyfile]</span>
+<span class="s">unmanaged-devices=interface-name:cali*;interface-name:tunl*;interface-name:vxlan.calico;interface-name:vxlan-v6.calico;interface-name:wireguard.cali;interface-name:wg-v6.cali</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>nmcli<span class="w"> </span>general<span class="w"> </span>reload
+</code></pre></div>
+<p>Overlay supports container layers; bridge filtering and forwarding prepare Pod
+traffic; VXLAN supplies the cross-node tunnel. NetworkManager exclusions leave
+Calico interfaces under Calico's control. Modules and sysctls were verified live;
+their persistence after a subsequent reboot has not been separately tested.</p>
+<p>Firewalld was backed up and disabling it was instructed to match the control
+plane and avoid interference with Calico. The provided baseline screenshot shows
+the earlier active state; a separate disabled-state capture was not supplied.
+SELinux remains Enforcing. Calico host firewall policy is not yet configured.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cp<span class="w"> </span>-a<span class="w"> </span>/etc/firewalld<span class="w"> </span><span class="s2">"/root/firewalld-before-calico-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M%S<span class="k">)</span><span class="s2">"</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>--now<span class="w"> </span>firewalld
+systemctl<span class="w"> </span>is-enabled<span class="w"> </span>firewalld
+systemctl<span class="w"> </span>is-active<span class="w"> </span>firewalld
+getenforce
+</code></pre></div>
+<p>CRI-O was installed from the stable v1.36 RPM repository with container-selinux
+and started using <code>sudo systemctl enable --now crio</code>. Its log shows systemd
+cgroup management, SELinux enabled and successful startup. Kubernetes packages
+were installed targeting kubelet, kubeadm and kubectl 1.36.5 to match the control
+plane, with cri-tools for runtime checks. Package installation was user-confirmed;
+the screenshots here do not independently list every installed worker version.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/crictl.yaml<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">runtime-endpoint: unix:///var/run/crio/crio.sock</span>
+<span class="s">image-endpoint: unix:///var/run/crio/crio.sock</span>
+<span class="s">timeout: 10</span>
+<span class="s">debug: false</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span>crictl<span class="w"> </span>version
+sudo<span class="w"> </span>crictl<span class="w"> </span>info
+</code></pre></div>
+<p>RuntimeReady was true. NetworkReady was false because CNI configuration was not
+yet present; this was a pre-join state, not the final networking result.</p>
+<h2 id="join-the-existing-cluster">Join the existing cluster<a class="headerlink" href="#join-the-existing-cluster" title="Permanent link">&para;</a></h2>
+<p>The worker reached the API at 192.168.200.10:6443 from 192.168.200.11.
+On the control plane, generate a short-lived complete command:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>kubeadm<span class="w"> </span>token<span class="w"> </span>create<span class="w"> </span>--ttl<span class="w"> </span>1h<span class="w"> </span>--print-join-command<span class="w"> </span><span class="p">|</span>
+<span class="w">  </span>sed<span class="w"> </span><span class="s1">'s/^kubeadm /sudo kubeadm /; s|$| --cri-socket unix:///var/run/crio/crio.sock --node-name lab-worker-01|'</span>
+</code></pre></div>
+<p>Run the generated line on the worker. Do not publish its output: it contains a
+bootstrap token. An initial attempt mistakenly retained angle-bracket placeholders
+and duplicated <code>sha256:</code>; Bash interpreted redirection before kubeadm ran.
+Using the complete generated line resolved this, with no reset required.</p>
+<p>The successful join output is transcribed rather than published because its
+screenshot contains tokens. It reported healthy kubelet, TLS bootstrap and
+"This node has joined the cluster". It also warned about hostname resolution,
+the vendor kernel's upstream LTS classification and kubelet not being enabled at
+boot. Join success does not establish that every warning was resolved.</p>
+<p>The worker was instructed to enable kubelet before testing:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>kubelet
+systemctl<span class="w"> </span>is-enabled<span class="w"> </span>kubelet
+systemctl<span class="w"> </span>is-active<span class="w"> </span>kubelet
+</code></pre></div>
+<p>The user reported both nodes Ready. Kubelet boot enablement was instructed after
+the warning, but its output and a post-join reboot are not separately evidenced.</p>
+<h2 id="cross-node-pod-dns-and-service-tests-passed">Cross-node Pod, DNS and Service tests (passed)<a class="headerlink" href="#cross-node-pod-dns-and-service-tests-passed" title="Permanent link">&para;</a></h2>
+<p>All kubectl commands below run on lab-control-01. Two temporary BusyBox HTTP Pods
+were placed on different nodes. Only the test Pod tolerates the control-plane
+taint; the node's scheduling protection is preserved. This repeatable version
+assigns a unique Service selector from the start.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>network-check
+<span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span>lab-control-01<span class="w"> </span>lab-worker-01<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: Pod</span>
+<span class="s">metadata:</span>
+<span class="s">  name: net-${node}</span>
+<span class="s">  namespace: network-check</span>
+<span class="s">  labels:</span>
+<span class="s">    app: network-check</span>
+<span class="s">    test-node: ${node}</span>
+<span class="s">spec:</span>
+<span class="s">  nodeSelector:</span>
+<span class="s">    kubernetes.io/hostname: ${node}</span>
+<span class="s">  tolerations:</span>
+<span class="s">    - key: node-role.kubernetes.io/control-plane</span>
+<span class="s">      operator: Exists</span>
+<span class="s">      effect: NoSchedule</span>
+<span class="s">  automountServiceAccountToken: false</span>
+<span class="s">  containers:</span>
+<span class="s">    - name: web</span>
+<span class="s">      image: docker.io/library/busybox:1.37.0</span>
+<span class="s">      command: ["/bin/sh", "-c"]</span>
+<span class="s">      args:</span>
+<span class="s">        - mkdir -p /www; hostname &gt; /www/index.html; exec httpd -f -p 8080 -h /www</span>
+<span class="s">      readinessProbe:</span>
+<span class="s">        httpGet:</span>
+<span class="s">          path: /</span>
+<span class="s">          port: 8080</span>
+<span class="s">      resources:</span>
+<span class="s">        requests:</span>
+<span class="s">          cpu: 10m</span>
+<span class="s">          memory: 16Mi</span>
+<span class="s">        limits:</span>
+<span class="s">          cpu: 100m</span>
+<span class="s">          memory: 64Mi</span>
+<span class="s">EOF</span>
+<span class="k">done</span>
+kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>network-check<span class="w"> </span>--timeout<span class="o">=</span>300s
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>-o<span class="w"> </span>wide
+</code></pre></div>
+<p>Stop and inspect Pod events if readiness times out. Once ready, test both paths:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">CONTROL_POD_IP</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>net-lab-control-01<span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.podIP}'</span><span class="k">)</span>
+<span class="nv">WORKER_POD_IP</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>net-lab-worker-01<span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.podIP}'</span><span class="k">)</span>
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>net-lab-control-01<span class="w"> </span>--<span class="w"> </span>wget<span class="w"> </span>-T<span class="w"> </span><span class="m">10</span><span class="w"> </span>-qO-<span class="w"> </span><span class="s2">"http://</span><span class="si">${</span><span class="nv">WORKER_POD_IP</span><span class="si">}</span><span class="s2">:8080"</span>
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>net-lab-worker-01<span class="w"> </span>--<span class="w"> </span>wget<span class="w"> </span>-T<span class="w"> </span><span class="m">10</span><span class="w"> </span>-qO-<span class="w"> </span><span class="s2">"http://</span><span class="si">${</span><span class="nv">CONTROL_POD_IP</span><span class="si">}</span><span class="s2">:8080"</span>
+<span class="k">for</span><span class="w"> </span>pod<span class="w"> </span><span class="k">in</span><span class="w"> </span>net-lab-control-01<span class="w"> </span>net-lab-worker-01<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span><span class="s2">"</span><span class="nv">$pod</span><span class="s2">"</span><span class="w"> </span>--<span class="w"> </span>nslookup<span class="w"> </span>kubernetes.default.svc.cluster.local
+<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span><span class="s2">"</span><span class="nv">$pod</span><span class="s2">"</span><span class="w"> </span>--<span class="w"> </span>nslookup<span class="w"> </span>www.redhat.com
+<span class="k">done</span>
+kubectl<span class="w"> </span>expose<span class="w"> </span>pod<span class="w"> </span>net-lab-worker-01<span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>--name<span class="o">=</span>worker-web<span class="w"> </span>--port<span class="o">=</span><span class="m">8080</span><span class="w"> </span>--target-port<span class="o">=</span><span class="m">8080</span><span class="w"> </span>--selector<span class="o">=</span>test-node<span class="o">=</span>lab-worker-01
+kubectl<span class="w"> </span>get<span class="w"> </span>endpointslices<span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>-l<span class="w"> </span>kubernetes.io/service-name<span class="o">=</span>worker-web<span class="w"> </span>-o<span class="w"> </span>wide
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>network-check<span class="w"> </span>net-lab-control-01<span class="w"> </span>--<span class="w"> </span>wget<span class="w"> </span>-T<span class="w"> </span><span class="m">10</span><span class="w"> </span>-qO-<span class="w"> </span>http://worker-web.network-check.svc.cluster.local:8080
+</code></pre></div>
+<p>Observed test Pod addresses were 10.244.242.6 on the control plane and
+10.244.248.130 on the worker. Direct HTTP returned the opposite Pod's hostname
+in each direction. Internal and external DNS passed (user report, with worker
+lookups visible). Kubernetes DNS answered at 10.96.0.10 and resolved the API
+Service to 10.96.0.1. DNS answers containing IPv6 do not prove IPv6 connectivity.</p>
+<p>During the original test, both Pods shared only app=network-check. Exposing the
+worker Pod therefore selected both Pods. We corrected the Service using a unique
+test-endpoint=worker label and replaced its selector. The screenshot verifies
+the resulting EndpointSlice had only 10.244.248.130. The subsequent Service-name
+HTTP request returned net-lab-worker-01, proving that request crossed nodes.
+The commands above incorporate a unique selector to avoid repeating that mistake.</p>
+<p>After all tests passed, cleanup removed only the dedicated test namespace:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>network-check
+kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
+kubectl<span class="w"> </span>get<span class="w"> </span>tigerastatus
+</code></pre></div>
+<p>Namespace deletion is visible. The user reports both nodes remain Ready; the
+final node and Tigera status output is outside the screenshot. These tests prove
+cross-node HTTP and DNS/Service routing, not NetworkPolicy enforcement, throughput,
+high availability or production readiness.</p>
+<h2 id="worker-setup-and-test-screenshots">Worker setup and test screenshots<a class="headerlink" href="#worker-setup-and-test-screenshots" title="Permanent link">&para;</a></h2>
+<h3 id="worker-upgrade-complete">Worker upgrade complete<a class="headerlink" href="#worker-upgrade-complete" title="Permanent link">&para;</a></h3>
+<p>DNF Complete and newly installed kernel 5.14.0-687.58.1.el9_8.x86_64.</p>
+<p><img alt="Worker upgrade complete" src="../images/worker-upgrade-complete.png" /></p>
+<h3 id="worker-kernel-networking">Worker kernel networking<a class="headerlink" href="#worker-kernel-networking" title="Permanent link">&para;</a></h3>
+<p>Modules loaded, forwarding enabled, Ethernet route, SELinux Enforcing and cgroup v2; firewalld still active at this historical point.</p>
+<p><img alt="Worker kernel networking" src="../images/worker-kernel-networking.png" /></p>
+<h3 id="worker-cri-o-started">Worker CRI-O started<a class="headerlink" href="#worker-cri-o-started" title="Permanent link">&para;</a></h3>
+<p>Service startup completed; a truncated warning is not interpreted as a verified diagnosis.</p>
+<p><img alt="Worker CRI-O started" src="../images/worker-crio-started.png" /></p>
+<h3 id="worker-runtime-ready">Worker runtime ready<a class="headerlink" href="#worker-runtime-ready" title="Permanent link">&para;</a></h3>
+<p>RuntimeReady true and NetworkReady false before joining and Calico setup.</p>
+<p><img alt="Worker runtime ready" src="../images/worker-runtime-ready.png" /></p>
+<h3 id="worker-dns-and-initial-service-test">Worker DNS and initial Service test<a class="headerlink" href="#worker-dns-and-initial-service-test" title="Permanent link">&para;</a></h3>
+<p>Internal and external worker DNS succeed; initial Service selector was subsequently corrected.</p>
+<p><img alt="Worker DNS and initial Service test" src="../images/worker-dns-and-service.png" /></p>
+<h3 id="cross-node-networking-and-cleanup">Cross-node networking and cleanup<a class="headerlink" href="#cross-node-networking-and-cleanup" title="Permanent link">&para;</a></h3>
+<p>Worker-only EndpointSlice, HTTP in both directions, Service DNS request and namespace deletion.</p>
+<p><img alt="Cross-node networking and cleanup" src="../images/cross-node-network-tests.png" /></p>
+<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>Confirm kubelet boot enablement and post-join reboot recovery, then continue with
+the planned second worker or supporting GitHub runner/local registry VM. Neither
+is claimed complete.</p>
 
 
 

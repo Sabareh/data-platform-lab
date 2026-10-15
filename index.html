@@ -307,6 +307,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#current-milestone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current milestone
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#follow-the-build" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -710,6 +721,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#current-milestone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current milestone
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#follow-the-build" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -785,6 +807,8 @@ explanations and screenshots from the actual setup.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="current-milestone">Current milestone<a class="headerlink" href="#current-milestone" title="Permanent link">&para;</a></h2>
+<p>The first worker has joined the Kubernetes cluster. Both nodes are reported Ready. Cross-node HTTP in both directions, internal/external DNS and worker-only Service routing passed; the temporary test namespace was deleted. RHEL updates and persistent swap disablement are complete. The second worker and supporting GitHub runner/local registry VM remain planned.</p>
 <h2 id="follow-the-build">Follow the build<a class="headerlink" href="#follow-the-build" title="Permanent link">&para;</a></h2>
 <ol>
 <li><a href="01-repository-foundation/">Set up Git and GitHub</a>.</li>
@@ -793,12 +817,12 @@ explanations and screenshots from the actual setup.</p>
 <li><a href="04-rhel-first-boot/">Verify networking, SSH and package access</a>.</li>
 <li><a href="05-kubernetes-node-preparation/">Prepare the Kubernetes node</a>.</li>
 <li><a href="07-control-plane-and-calico/">Bootstrap the control plane and configure Calico</a>.</li>
-<li><a href="08-first-worker-vm/">Create the first worker VM</a>.</li>
+<li><a href="08-first-worker-vm/">Set up and join the first worker</a>.</li>
 <li><a href="06-ci-and-registry-plan/">Explore the CI and registry plan</a>.</li>
 </ol>
 <h2 id="evidence-not-just-instructions">Evidence, not just instructions<a class="headerlink" href="#evidence-not-just-instructions" title="Permanent link">&para;</a></h2>
 <p>The <a href="progress/">progress register</a> separates verified outcomes from planned work.
-The <a href="screenshots/">screenshot index</a> contains 33 reviewed captures, including
+The <a href="screenshots/">screenshot index</a> contains 39 reviewed captures, including
 intermediate failures and their resolution. Commands describe a guided build;
 read their context before rerunning them on an existing system.</p>
 <p>This is an independent personal lab using synthetic data, not a production deployment.</p>
