@@ -75,7 +75,7 @@ CRI-O 1.36.7 responds through CRI API v1. The Kubernetes 1.36.5 control plane is
 Ready, Calico VXLAN is available, both CoreDNS Pods are Running, and internal
 and external Pod DNS tests succeeded. The test Pod was deleted.
 
-The first worker has joined the Kubernetes cluster. Both nodes are reported Ready. Cross-node HTTP in both directions, internal/external DNS and worker-only Service routing passed; the temporary test namespace was deleted. RHEL updates and persistent swap disablement are complete. The second worker and supporting GitHub runner/local registry VM remain planned.
+The cluster now has one control plane and two workers, all verified Ready. Calico is available, and worker-to-worker Pod HTTP, DNS and Service tests passed. The temporary test namespace was deleted (user-confirmed). The supporting GitHub runner/local registry VM remains planned.
 
 The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
@@ -99,8 +99,9 @@ Executable manifests remain in this repository.
 - [Kubernetes node preparation and troubleshooting](https://github.com/Sabareh/data-platform-lab/wiki/05-kubernetes-node-preparation)
 - [GitHub Actions and local registry plan](https://github.com/Sabareh/data-platform-lab/wiki/06-ci-and-registry-plan)
 - [Control-plane bootstrap and Calico](https://github.com/Sabareh/data-platform-lab/wiki/07-control-plane-and-calico)
+- [Second worker and networking tests](https://sabareh.github.io/data-platform-lab/09-second-worker-vm/)
 - [First worker VM guide](https://sabareh.github.io/data-platform-lab/08-first-worker-vm/)
-- [Screenshot evidence index: 39 images](https://github.com/Sabareh/data-platform-lab/wiki/screenshots)
+- [Screenshot evidence index: 51 images](https://github.com/Sabareh/data-platform-lab/wiki/screenshots)
 - [Progress and evidence register](https://github.com/Sabareh/data-platform-lab/wiki/progress)
 
 The guides preserve commands from the build with explanations. Creation
