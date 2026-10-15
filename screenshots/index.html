@@ -697,6 +697,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#worker-first-boot-and-network-repair-2026-10-15-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker first boot and network repair � 2026-10-15 update
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -797,6 +808,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#worker-first-boot-and-network-repair-2026-10-15-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker first boot and network repair � 2026-10-15 update
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -815,7 +837,7 @@
 
 
 <h1 id="screenshot-evidence-index">Screenshot evidence index<a class="headerlink" href="#screenshot-evidence-index" title="Permanent link">&para;</a></h1>
-<p>Thirty-one screenshots from the current Hyper-V/RHEL rebuild are preserved
+<p>Thirty-three screenshots from the current Hyper-V/RHEL rebuild are preserved
 unchanged under <code>docs/images/</code> and embedded beside the relevant explanations.
 They include intermediate states and failures, not just successful outcomes.</p>
 <h2 id="installation-sequence">Installation sequence<a class="headerlink" href="#installation-sequence" title="Permanent link">&para;</a></h2>
@@ -1038,7 +1060,30 @@ Calico network readiness is evidenced in the subsequent update below.</p>
 </tbody>
 </table>
 <p>Worker creation/settings were supplied as text, not a screenshot. Pod DNS success
-and test-Pod deletion were user-reported. No installer-boot result was supplied.</p>
+and test-Pod deletion were user-reported. Installer boot and installation were confirmed in the subsequent worker update below.</p>
+<h2 id="worker-first-boot-and-network-repair-2026-10-15-update">Worker first boot and network repair � 2026-10-15 update<a class="headerlink" href="#worker-first-boot-and-network-repair-2026-10-15-update" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Screenshot</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../images/worker-first-boot.png">Worker first boot</a></td>
+<td>RHEL 9.8, hostname, guest RAM/swap and sudo access</td>
+</tr>
+<tr>
+<td><a href="../images/worker-network-profile-inactive.png">Inactive Ethernet profile</a></td>
+<td>Later missing IPv4 address, routes and active Ethernet connection</td>
+</tr>
+</tbody>
+</table>
+<p>These two supplied originals were reviewed and preserved unchanged. The later
+HTTPS screenshot contains cookies, and registration screenshots contain account
+and system identifiers; their outcomes are documented in text instead. Package
+update completion and post-update reboot have not yet been evidenced.</p>
 
 
 

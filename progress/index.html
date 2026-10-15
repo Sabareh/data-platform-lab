@@ -751,13 +751,13 @@
 
 
 <h1 id="progress-and-evidence-register">Progress and evidence register<a class="headerlink" href="#progress-and-evidence-register" title="Permanent link">&para;</a></h1>
-<p>Updated: 2026-10-14 (Africa/Nairobi).</p>
+<p>Updated: 2026-10-15 (Africa/Nairobi).</p>
 <p>This register records user-shared terminal output and completion reports.
 It is not an independent live audit of the Hyper-V host. Selected original
 screenshots are embedded in the installation and first-boot guides. They show
 only the personal lab; credentials, cookie-bearing HTTP output and unrelated
 personal storage-cleanup material are not included.</p>
-<p>The <a href="../screenshots/">screenshot index</a> lists all 31 included images, their
+<p>The <a href="../screenshots/">screenshot index</a> lists all 33 included images, their
 purposes and the reasons other supplied images were not published.</p>
 <table>
 <thead>
@@ -891,7 +891,7 @@ purposes and the reasons other supplied images were not published.</p>
 <tr>
 <td>First worker VM</td>
 <td>Created and verified</td>
-<td>lab-worker-01 Off, Generation 2, two CPUs, fixed 5120 MiB, 40 GB disk, lab switch; OS installation pending</td>
+<td>Generation 2, two CPUs, fixed 5120 MiB, 40 GB disk; RHEL 9.8 installed and booted</td>
 </tr>
 <tr>
 <td>RHEL update</td>
@@ -979,6 +979,26 @@ purposes and the reasons other supplied images were not published.</p>
 <td>Selected co-location on supporting RHEL VM outside Kubernetes</td>
 </tr>
 <tr>
+<td>Worker networking</td>
+<td>Verified repaired</td>
+<td>Dedicated lab-worker-eth0 profile active, gateway reachable, DNS and HTTPS successful; reboot persistence pending</td>
+</tr>
+<tr>
+<td>Worker time sync</td>
+<td>Verified</td>
+<td>Selected NTP source, Leap Normal, clock synchronised yes</td>
+</tr>
+<tr>
+<td>Worker registration</td>
+<td>Verified in private screenshot</td>
+<td>Second attempt succeeded; identifying output excluded from publication</td>
+</tr>
+<tr>
+<td>Worker OS update</td>
+<td>In progress, user-reported</td>
+<td>DNF completion and new running kernel not yet verified</td>
+</tr>
+<tr>
 <td>Data/AI services and MCP</td>
 <td>Planned</td>
 <td>No deployments in the rebuilt lab</td>
@@ -1008,10 +1028,10 @@ root cause must remain unknown rather than being presented as a proven fix.</p>
 <li>Read-only MCP is deferred until Kubernetes is operational.</li>
 </ul>
 <h2 id="next-step">Next step<a class="headerlink" href="#next-step" title="Permanent link">&para;</a></h2>
-<p>Locate and attach the RHEL ISO to lab-worker-01, boot the installer and configure
-the worker. ISO attachment, OS installation and cluster join remain unconfirmed.
-See <a href="../08-first-worker-vm/">first worker VM</a>. Cross-node networking will be
-tested after a worker joins. The second worker and runner/registry VM remain planned.</p>
+<p>Finish the worker package update, reboot and verify its kernel and network
+persistence. Then prepare swap, kernel networking, CRI-O and Kubernetes tools
+before joining the cluster. See <a href="../08-first-worker-vm/">first worker VM</a>.
+Cross-node networking remains untested; the second worker and runner/registry VM remain planned.</p>
 
 
 

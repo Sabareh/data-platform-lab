@@ -580,10 +580,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#locate-iso-and-boot-installer-pending" class="md-nav__link">
+  <a href="#locate-iso-and-boot-installer-historical-instructions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Locate ISO and boot installer (pending)
+        Locate ISO and boot installer (historical instructions)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-boot-and-connectivity-repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First boot and connectivity repair
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-synchronisation-and-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time synchronisation and registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-update-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package update (in progress)
       
     </span>
   </a>
@@ -747,10 +780,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#locate-iso-and-boot-installer-pending" class="md-nav__link">
+  <a href="#locate-iso-and-boot-installer-historical-instructions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Locate ISO and boot installer (pending)
+        Locate ISO and boot installer (historical instructions)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-boot-and-connectivity-repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First boot and connectivity repair
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-synchronisation-and-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time synchronisation and registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-update-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package update (in progress)
       
     </span>
   </a>
@@ -775,18 +841,21 @@
 
 
 <h1 id="first-worker-vm-creation-and-installation-preparation">First worker VM: creation and installation preparation<a class="headerlink" href="#first-worker-vm-creation-and-installation-preparation" title="Permanent link">&para;</a></h1>
-<p>Recorded 2026-10-14. Commands run in Windows PowerShell as Administrator unless
+<p>Created 2026-10-14; updated 2026-10-15 (Africa/Nairobi). Commands run in Windows PowerShell as Administrator unless
 labelled RHEL. VM creation below is historical: do not rerun it against the
 existing worker.</p>
 <h2 id="verified-state">Verified state<a class="headerlink" href="#verified-state" title="Permanent link">&para;</a></h2>
-<p><code>lab-worker-01</code> exists and is Off, with Generation 2, two virtual CPUs and fixed
+<p><code>lab-worker-01</code> was created Off and has since booted installed RHEL 9.8. It has
+Generation 2, two virtual CPUs and fixed
 5120 MiB RAM. Secure Boot is On using MicrosoftUEFICertificateAuthority. Its
 network adapter uses <code>reservoir-lab-switch</code>, and its new 40 GB dynamically
 expanding disk is <code>C:\Users\USER\HyperV\data-platform-lab\lab-worker-01\os.vhdx</code>.
 The creation and configuration results were supplied as terminal text.</p>
-<p>ISO attachment, installer boot, worker OS installation, worker IP assignment
-and joining Kubernetes have <strong>not yet been confirmed</strong>. The existing
-control-plane VM is not being cloned.</p>
+<p>Installer completion and installed-system login are confirmed. The network was
+subsequently repaired, time synchronisation verified and registration completed.
+The package update is in progress; completion and post-update reboot are not yet
+verified. The worker has not joined Kubernetes. ISO ejection was instructed but
+not separately evidenced. This is a fresh installation, not a control-plane clone.</p>
 <h2 id="capacity-checks">Capacity checks<a class="headerlink" href="#capacity-checks" title="Permanent link">&para;</a></h2>
 <p>Before creation, the host reported 31.67 GiB total RAM, 15.2 GiB free RAM and
 172.1 GiB free on C:. The control-plane VM was Running with two CPUs and 3 GiB
@@ -833,7 +902,7 @@ a graceful guest shutdown when the host shuts down.</p>
 </code></pre></div>
 <p>Observed: Off, Generation 2, two CPUs, DynamicMemoryEnabled False, 5120 MiB,
 Secure Boot On with the chosen template, correct switch and disk path.</p>
-<h2 id="locate-iso-and-boot-installer-pending">Locate ISO and boot installer (pending)<a class="headerlink" href="#locate-iso-and-boot-installer-pending" title="Permanent link">&para;</a></h2>
+<h2 id="locate-iso-and-boot-installer-historical-instructions">Locate ISO and boot installer (historical instructions)<a class="headerlink" href="#locate-iso-and-boot-installer-historical-instructions" title="Permanent link">&para;</a></h2>
 <p>The earlier control-plane installation used the verified RHEL 9.8 x86_64 DVD
 ISO in Downloads. Confirm it still exists before attaching it:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">$workerName</span> <span class="p">=</span> <span class="s2">"lab-worker-01"</span>
@@ -861,8 +930,98 @@ ISO in Downloads. Confirm it still exists before attaching it:</p>
 </code></pre></div>
 <p>In Virtual Machine Connection, click Start, respond to the DVD boot prompt if
 shown, and select Install Red Hat Enterprise Linux 9.8. Choose English (United
-States) and continue to Installation Summary. These steps were proposed, not
-reported completed. Configure a unique worker hostname and address next.</p>
+States) and continue to Installation Summary. The user subsequently confirmed reaching Installation Summary and completing
+installation. The following sections record first boot and network repair.</p>
+<h2 id="first-boot-and-connectivity-repair">First boot and connectivity repair<a class="headerlink" href="#first-boot-and-connectivity-repair" title="Permanent link">&para;</a></h2>
+<p>The installed worker reported hostname lab-worker-01, RHEL 9.8, about 4.5 GiB
+usable RAM and 4 GiB swap. <code>sudo whoami</code> returned root. SSH access was reported
+working, but subsequent console diagnostics showed that Ethernet had lost its
+IPv4 configuration. The exact cause of that transition is not established.</p>
+<p><img alt="Worker first boot and administrator access" src="../images/worker-first-boot.png" /></p>
+<p>The corrected <code>ip -4 route</code> command returned no routes. <code>eth0</code> was UP without an
+IP address, and <code>nmcli connection show --active</code> listed only loopback. DNS
+servers were present in resolv.conf but unreachable without working networking.
+This was more than a DNS configuration problem.</p>
+<p><img alt="No active Ethernet profile or IPv4 route" src="../images/worker-network-profile-inactive.png" /></p>
+<p>The following commands created or reused a dedicated profile in the worker's
+Hyper-V console. Existing profiles were preserved:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>nmcli<span class="w"> </span>connection<span class="w"> </span>show<span class="w"> </span><span class="s2">"lab-worker-eth0"</span><span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>sudo<span class="w"> </span>nmcli<span class="w"> </span>connection<span class="w"> </span>add<span class="w"> </span><span class="nb">type</span><span class="w"> </span>ethernet<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>con-name<span class="w"> </span><span class="s2">"lab-worker-eth0"</span><span class="w"> </span>ifname<span class="w"> </span>eth0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>connection.autoconnect<span class="w"> </span>no
+<span class="k">fi</span>
+sudo<span class="w"> </span>nmcli<span class="w"> </span>connection<span class="w"> </span>modify<span class="w"> </span><span class="s2">"lab-worker-eth0"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>connection.interface-name<span class="w"> </span>eth0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>connection.autoconnect<span class="w"> </span>yes<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>connection.autoconnect-priority<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ipv4.method<span class="w"> </span>manual<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ipv4.addresses<span class="w"> </span><span class="s2">"192.168.200.11/24"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ipv4.gateway<span class="w"> </span><span class="s2">"192.168.200.1"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ipv4.dns<span class="w"> </span><span class="s2">"1.1.1.1 8.8.8.8"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ipv4.ignore-auto-dns<span class="w"> </span>yes<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ipv4.never-default<span class="w"> </span>no
+sudo<span class="w"> </span>nmcli<span class="w"> </span>connection<span class="w"> </span>up<span class="w"> </span><span class="s2">"lab-worker-eth0"</span>
+ip<span class="w"> </span>-br<span class="w"> </span>address
+ip<span class="w"> </span>-4<span class="w"> </span>route
+nmcli<span class="w"> </span>connection<span class="w"> </span>show<span class="w"> </span>--active
+ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><span class="w"> </span>-W<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">192</span>.168.200.1
+getent<span class="w"> </span>ahostsv4<span class="w"> </span>www.redhat.com
+curl<span class="w"> </span>-I<span class="w"> </span>--connect-timeout<span class="w"> </span><span class="m">10</span><span class="w"> </span>--max-time<span class="w"> </span><span class="m">30</span><span class="w"> </span>https://www.redhat.com
+</code></pre></div>
+<p>The profile activated on eth0, the gateway replied, DNS resolved the hostname,
+and HTTPS returned HTTP/2 301. Earlier curl errors omitted the numeric argument
+after <code>--max-time</code>; the final command corrected that. The success screenshot
+contains HTTP cookies and is excluded from public images. Autoconnect is configured,
+but persistence after a further reboot has not yet been retested.</p>
+<h2 id="time-synchronisation-and-registration">Time synchronisation and registration<a class="headerlink" href="#time-synchronisation-and-registration" title="Permanent link">&para;</a></h2>
+<p>Chrony selected a time source, reported Leap status Normal, and timedatectl
+reported System clock synchronized yes with NTP active in Africa/Nairobi.
+An earlier <code>501 Not authorised</code> likely resulted from running the mutating
+<code>chronyc online</code> command without sudo. The correct form is shown below; no
+additional retry was needed once synchronisation was confirmed.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>chronyd
+sudo<span class="w"> </span>chronyc<span class="w"> </span>online
+chronyc<span class="w"> </span>sources<span class="w"> </span>-v
+chronyc<span class="w"> </span>tracking
+timedatectl
+hostnamectl<span class="w"> </span>--static
+sudo<span class="w"> </span>subscription-manager<span class="w"> </span>register
+</code></pre></div>
+<p>Enter Red Hat account credentials interactively. The first registration attempt
+reported invalid credentials; the second succeeded for lab-worker-01. The
+registration screenshots contain a system ID and account identifier and are not
+published. No passwords or registration IDs are recorded here.</p>
+<h2 id="package-update-in-progress">Package update (in progress)<a class="headerlink" href="#package-update-in-progress" title="Permanent link">&para;</a></h2>
+<p>These batches were provided after registration. The user subsequently reported
+that the worker was updating. Detailed repository and transaction completion
+output has not yet been supplied:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>subscription-manager<span class="w"> </span>refresh
+sudo<span class="w"> </span>subscription-manager<span class="w"> </span>repos<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--enable<span class="o">=</span>rhel-9-for-x86_64-baseos-rpms<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--enable<span class="o">=</span>rhel-9-for-x86_64-appstream-rpms
+sudo<span class="w"> </span>dnf<span class="w"> </span>repolist<span class="w"> </span>--enabled
+sudo<span class="w"> </span>dnf<span class="w"> </span>makecache<span class="w"> </span>--refresh
+sudo<span class="w"> </span>dnf<span class="w"> </span>upgrade<span class="w"> </span>--refresh
+</code></pre></div>
+<p>Refresh retrieves account information; BaseOS and AppStream supply system and
+application packages. makecache checks metadata access, while upgrade installs
+available package updates after confirmation.</p>
+<p>Only after DNF finishes successfully, reboot and verify:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>reboot
+</code></pre></div>
+<p>Reconnect from Windows with <code>ssh sabare@192.168.200.11</code>, then run:</p>
+<div class="highlight"><pre><span></span><code>hostnamectl<span class="w"> </span>--static
+uname<span class="w"> </span>-r
+ip<span class="w"> </span>-br<span class="w"> </span>address
+ip<span class="w"> </span>-4<span class="w"> </span>route
+free<span class="w"> </span>-h
+swapon<span class="w"> </span>--show
+timedatectl
+</code></pre></div>
+<p>Next: verify the updated kernel and persistent networking, disable swap
+persistently, prepare kernel networking and install the compatible Kubernetes
+runtime and tools. None of those worker preparation steps or cluster join is
+claimed complete yet.</p>
 
 
 
