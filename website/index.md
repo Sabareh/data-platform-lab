@@ -17,6 +17,10 @@ explanations and screenshots from the actual setup.
 | Planned CI | GitHub Actions runner and a local registry |
 | Planned workloads | Data pipelines, notebooks and AI experiments |
 
+## Current milestone
+
+The first worker has joined the Kubernetes cluster. Both nodes are reported Ready. Cross-node HTTP in both directions, internal/external DNS and worker-only Service routing passed; the temporary test namespace was deleted. RHEL updates and persistent swap disablement are complete. The second worker and supporting GitHub runner/local registry VM remain planned.
+
 ## Follow the build
 
 1. [Set up Git and GitHub](01-repository-foundation.md).
@@ -25,13 +29,13 @@ explanations and screenshots from the actual setup.
 4. [Verify networking, SSH and package access](04-rhel-first-boot.md).
 5. [Prepare the Kubernetes node](05-kubernetes-node-preparation.md).
 6. [Bootstrap the control plane and configure Calico](07-control-plane-and-calico.md).
-7. [Create the first worker VM](08-first-worker-vm.md).
+7. [Set up and join the first worker](08-first-worker-vm.md).
 8. [Explore the CI and registry plan](06-ci-and-registry-plan.md).
 
 ## Evidence, not just instructions
 
 The [progress register](progress.md) separates verified outcomes from planned work.
-The [screenshot index](screenshots.md) contains 33 reviewed captures, including
+The [screenshot index](screenshots.md) contains 39 reviewed captures, including
 intermediate failures and their resolution. Commands describe a guided build;
 read their context before rerunning them on an existing system.
 

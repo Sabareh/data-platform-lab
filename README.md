@@ -75,11 +75,7 @@ CRI-O 1.36.7 responds through CRI API v1. The Kubernetes 1.36.5 control plane is
 Ready, Calico VXLAN is available, both CoreDNS Pods are Running, and internal
 and external Pod DNS tests succeeded. The test Pod was deleted.
 
-The first worker, lab-worker-01, now runs RHEL 9.8 with two CPUs and fixed 5 GB RAM.
-Its network profile was repaired, internet access and clock synchronisation
-verified, and Red Hat registration completed. Package updating is in progress;
-completion, post-update reboot and Kubernetes join are not yet confirmed.
-The second worker and supporting runner/registry VM remain planned.
+The first worker has joined the Kubernetes cluster. Both nodes are reported Ready. Cross-node HTTP in both directions, internal/external DNS and worker-only Service routing passed; the temporary test namespace was deleted. RHEL updates and persistent swap disablement are complete. The second worker and supporting GitHub runner/local registry VM remain planned.
 
 The earlier switch-creation error `0x800700B7` no longer blocks progress:
 a later retry succeeded. Its underlying cause was not established, and a
@@ -104,7 +100,7 @@ Executable manifests remain in this repository.
 - [GitHub Actions and local registry plan](https://github.com/Sabareh/data-platform-lab/wiki/06-ci-and-registry-plan)
 - [Control-plane bootstrap and Calico](https://github.com/Sabareh/data-platform-lab/wiki/07-control-plane-and-calico)
 - [First worker VM guide](https://sabareh.github.io/data-platform-lab/08-first-worker-vm/)
-- [Screenshot evidence index: 33 images](https://github.com/Sabareh/data-platform-lab/wiki/screenshots)
+- [Screenshot evidence index: 39 images](https://github.com/Sabareh/data-platform-lab/wiki/screenshots)
 - [Progress and evidence register](https://github.com/Sabareh/data-platform-lab/wiki/progress)
 
 The guides preserve commands from the build with explanations. Creation
